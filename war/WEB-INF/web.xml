@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+  
+  	<context-param>
+		<param-name>home_url</param-name>
+		<param-value>/pgstudio/PgStudio.jsp</param-value>
+		<!-- Use this URL with debugging in Eclispe  
+		<param-value>http://127.0.0.1:8888/PgStudio.jsp?gwt.codesvr=127.0.0.1:9997</param-value>
+		-->
+	</context-param>
+  
+  <!-- Servlets -->
+  <servlet>
+    <servlet-name>studioServlet</servlet-name>
+    <servlet-class>com.openscg.pgstudio.server.PgStudioServiceImpl</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>studioServlet</servlet-name>
+    <url-pattern>/com.openscg.pgstudio.PgStudio/studio</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>loginHandler</servlet-name>
+    <servlet-class>com.openscg.pgstudio.server.LoginHandler</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>loginHandler</servlet-name>
+    <url-pattern>/com.openscg.pgstudio.PgStudio/login</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>dataProxy</servlet-name>
+    <servlet-class>com.openscg.pgstudio.server.DataProxy</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>dataProxy</servlet-name>
+    <url-pattern>/com.openscg.pgstudio.PgStudio/dataProxy</url-pattern>
+  </servlet-mapping>
+  
+  <!-- Default page to serve -->
+  <welcome-file-list>
+    <welcome-file>PgStudio.jsp</welcome-file>
+  </welcome-file-list>
+
+</web-app>

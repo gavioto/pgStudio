@@ -1,0 +1,783 @@
+/** Add css rules here for your application. */
+
+html {
+  background: url(images/bg.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.studioBody {
+	background: transparent;	
+}
+
+h1 {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin: 40px 0px 70px;
+  text-align: center;
+}
+
+.sendButton {
+  display: block;
+  font-size: 16pt;
+}
+
+#headerlarge {
+    margin: 0 auto 5px;
+    width: 350px;
+    background: url(images/logo.png) no-repeat left center;
+    padding: 12px 0 8px 75px;
+    text-shadow: 0 0 5px rgba(255,255,255,0.5);
+}
+
+/** Most GWT widgets already have a style name defined */
+.gwt-DialogBox {
+  width: 400px;
+}
+
+.dialogVPanel {
+  margin: 5px;
+}
+
+.serverResponseLabelError {
+  color: red;
+}
+
+/** Set ids using widget.getElement().setId("idOfElement") */
+#closeButton {
+  margin: 15px 6px 6px;
+}
+
+#heading-top {
+  background: #51A9E7;
+  margin: 0;
+  width: 100%;
+  height: 32px;
+}
+
+.main-panel-container {
+  margin: 0 auto;
+  width: 960px;
+  height: 100%;
+  margin-top: 2px;
+  border-top: 2px solid #51A9E7;
+}
+
+.full-panel-container {
+  margin: 0 auto;
+  width: 960px;
+  height: 100%;
+}
+
+.studio-Label {
+	color: #97A1AE;
+    font-family: arial, sans-serif;
+    font-size: 19px;
+}
+
+.studio-Label-Small {
+	color: #97A1AE;
+    font-family: arial, sans-serif;
+    font-size: 15px;
+}
+
+.studio-Bottom-Panel {
+  padding-top: 6px;
+  border-top: 1px solid #bbbbbb;
+}
+
+.studio-DecoratedTabBar .gwt-DecoratedTabBar {
+  background: #fff;
+  padding-top: 6px;
+  border-bottom: 1px solid #bbbbbb;
+}
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .gwt-TabBarFirst {
+  width: 5px;  /* first tab distance from the left */
+}
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .gwt-TabBarRest {
+}
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .gwt-TabBarItem {
+  border-collapse: collapse;
+  margin-left: 4px;
+}
+
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .tabTopCenter {
+  padding: 0px;
+  border-top: 1px solid #bbbbbb;
+  background: url(com.openscg.pgstudio.PgStudio/gwt/clean/images/hborder.png) 0px -21px repeat-x;
+}
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .tabTopLeft,
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .tabTopRight {
+  padding: 0px;
+  zoom: 1;
+}
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .tabTopLeftInner,
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .tabTopRightInner {
+  width: 3px;
+  height: 3px;
+}
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .tabTopCenter {
+  background: url(com.openscg.pgstudio.PgStudio/gwt/clean/images/hborder.png) 0px -21px repeat-x;
+}
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .tabTopLeft {
+  border-left: 1px solid #bbbbbb;
+  background: #d3def6 url(com.openscg.pgstudio.PgStudio/gwt/clean/images/corner.png) no-repeat 0px -49px;
+  -background: #d3def6 url(com.openscg.pgstudio.PgStudio/gwt/clean/images/corner_ie6.png) no-repeat 0px -49px;
+}
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .tabTopRight {
+  border-right: 1px solid #bbbbbb;
+  background: #d3def6 url(com.openscg.pgstudio.PgStudio/gwt/clean/images/corner.png) no-repeat -6px -49px;
+  -background: #d3def6 url(com.openscg.pgstudio.PgStudio/gwt/clean/images/corner_ie6.png) no-repeat -6px -49px;
+}
+* html .studio-DecoratedTabBar .gwt-DecoratedTabBar .tabTopLeftInner,
+* html .studio-DecoratedTabBar .gwt-DecoratedTabBar .tabTopRightInner {
+  width: 3px;
+  height: 3px;
+  overflow: hidden;
+}
+
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .tabMiddleLeft {
+  background: #d3def6 url(com.openscg.pgstudio.PgStudio/gwt/clean/images/hborder.png) repeat-x 0px -989px;
+  border-left: 1px solid #bbbbbb;
+}
+
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .tabMiddleRight {
+  background: #d3def6 url(com.openscg.pgstudio.PgStudio/gwt/clean/images/hborder.png) repeat-x 0px -989px;
+  border-right: 1px solid #bbbbbb;
+}
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .tabMiddleLeftInner,
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .tabMiddleRightInner {
+  width: 1px;
+  height: 1px;
+}
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .tabMiddleCenter {
+  font-weight: bold;
+  font-size: 1.3em;
+  color: #000000;
+  background: #d3def6 url(com.openscg.pgstudio.PgStudio/gwt/clean/images/hborder.png) repeat-x 0px -989px;
+}
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .gwt-TabBarItem-selected .tabTopCenter {
+  background:#fff;
+}
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .gwt-TabBarItem-selected .tabTopLeft {
+  border-left: 1px solid #bbbbbb;
+  background: #d3def6 url(com.openscg.pgstudio.PgStudio/gwt/clean/images/corner.png) no-repeat 0px -49px;
+  -background: #d3def6 url(com.openscg.pgstudio.PgStudio/gwt/clean/images/corner_ie6.png) no-repeat 0px -49px;
+}
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .gwt-TabBarItem-selected .tabTopRight {
+  border-right: 1px solid #bbbbbb;
+  background: #d3def6 url(com.openscg.pgstudio.PgStudio/gwt/clean/images/corner.png) no-repeat -6px -49px;
+  -background: #d3def6 url(com.openscg.pgstudio.PgStudio/gwt/clean/images/corner_ie6.png) no-repeat -6px -49px;
+}
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .gwt-TabBarItem-selected .tabMiddleLeft,
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .gwt-TabBarItem-selected .tabMiddleRight {
+  background: #fff;
+}
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .gwt-TabBarItem-selected .tabMiddleCenter {
+  cursor: default;
+  background: #fff;
+  color:#333;
+  font-weight:bold;
+}
+.studio-DecoratedTabBar .gwt-DecoratedTabBar .gwt-TabBarItem-disabled .tabMiddleCenter {
+  cursor: default;
+}
+
+/* ***************************
+       Login
+**************************** */
+
+.studiocontainer.thinbase {
+    width: 450px;
+}
+
+.studiocontainer.widebase {
+    width: 1000px;
+}
+
+.studiocontainer {
+    margin: 20px auto 50px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,0.3);
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+    -webkit-box-shadow: 0 0 7px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0 0 7px rgba(0,0,0,0.5);
+    box-shadow: 0 0 7px rgba(0,0,0,0.5);
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding-box;
+    background-clip: padding-box;
+}
+
+.studiocontainer-header {
+    -webkit-border-radius: 8px 8px 0 0;
+    -moz-border-radius: 8px 8px 0 0;
+    border-radius: 8px 8px 0 0;
+    padding: 3px 15px;
+    background: #2b404e;
+    margin-top: -3px;
+}
+
+.studiocontainer-header h3 {
+    color: #fff;
+    font-size: 17px;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.5);
+}
+
+.studiocontainer-body {
+    padding: 20px;
+}
+
+.studiocontainer .connectform {
+    width: 407px;
+}
+
+.connect {
+    height: 350px;
+}
+
+.connect fieldset {
+    border: 0;
+}
+
+
+.row {
+    margin-left: -20px;
+    width: 500px;
+    height: 42px;
+}
+
+.connect form .clearfix {
+    margin-bottom: 18px;
+}
+
+.span1 {
+    width: 220px;
+    display: inline;
+    float: left;
+    margin-left: 20px;
+}
+
+.connectlabel {
+    padding-top: 6px;
+    font-family: "PTSansNarrowBold","Lucida Grande","Verdana",serif;
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 20px;
+    line-height: 18px;
+    text-align: left;
+    color: #616161;
+    width: 160px;
+    display: inline;
+    float: left;
+    margin-left: 20px;
+
+}
+
+.connect input {
+    display: inline-block;
+    width: 210px;
+    height: 23px;
+    padding: 8px;
+    font-size: 20px;
+    line-height: 18px;
+    color: #666;
+    border: 1px solid #C3C3C3;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    background: #FBFBFB;
+    font-family: "PTSansNarrow","Lucida Grande","Verdana",serif;
+    font-size: 20px;
+    font-weight: normal;
+    line-height: normal;
+}
+
+.connect input:focus, textarea:focus {
+    outline: 0;
+    border-color: rgba(82,168,236,0.8);
+    -webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.1),0 0 8px rgba(82,168,236,0.6);
+    -moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.1),0 0 8px rgba(82,168,236,0.6);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1),0 0 8px rgba(82,168,236,0.6);
+}
+
+.pull-right {
+    float: right;
+}
+
+.btn {
+	width: auto;
+    height: auto;
+    cursor: pointer;
+    display: inline-block;
+    background-color: #cecece;
+    background-repeat: repeat-x;
+    background-image: -khtml-gradient(linear,left top,left bottom,from(#fff),to(#cecece));
+    background-image: -moz-linear-gradient(top,#fff,#cecece);
+    background-image: -ms-linear-gradient(top,#fff,#cecece);
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#fff),color-stop(100%,#cecece));
+    background-image: -webkit-linear-gradient(top,#fff,#cecece);
+    background-image: -o-linear-gradient(top,#fff,#cecece);
+    background-image: linear-gradient(top,#fff,#cecece);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',endColorstr='#cecece',GradientType=0);
+    font-size: 14px;
+    padding: 5px 10px;
+    color: #555;
+    line-height: normal;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 1px 1px 0 rgba(255,255,255,0.3) inset,-1px 1px 0 rgba(255,255,255,0.3) inset,0 1px 2px rgba(0,0,0,0.3);
+    -moz-box-shadow: 1px 1px 0 rgba(255,255,255,0.3) inset,-1px 1px 0 rgba(255,255,255,0.3) inset,0 1px 2px rgba(0,0,0,0.3);
+    box-shadow: 1px 1px 0 rgba(255,255,255,0.3) inset,-1px 1px 0 rgba(255,255,255,0.3) inset,0 1px 2px rgba(0,0,0,0.3);
+    border: solid 1px #bbb;
+    -webkit-transition: .1s linear all;
+    -moz-transition: .1s linear all;
+    -ms-transition: .1s linear all;
+    -o-transition: .1s linear all;
+    transition: .1s linear all;
+}
+
+.btn.wide {
+    padding: 7px 40px 7px 40px;
+    width: 150px;
+    height: 45px;
+}
+
+.btn.primary {
+    color: #fff;
+    background-color: #2f7422;
+    background-repeat: repeat-x;
+    background-image: -khtml-gradient(linear,left top,left bottom,from(#57b43e),to(#2f7422));
+    background-image: -moz-linear-gradient(top,#57b43e,#2f7422);
+    background-image: -ms-linear-gradient(top,#57b43e,#2f7422);
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#57b43e),color-stop(100%,#2f7422));
+    background-image: -webkit-linear-gradient(top,#57b43e,#2f7422);
+    background-image: -o-linear-gradient(top,#57b43e,#2f7422);
+    background-image: linear-gradient(top,#57b43e,#2f7422);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#57b43e',endColorstr='#2f7422',GradientType=0);
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.5);
+    border-color: #2f7422 #2f7422 #173911;
+    border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+}
+
+/* ***************************
+       UI Messages
+**************************** */
+.msg-info, .msg-success, .msg-warning, .msg-error, .msg-validation {
+	border: 1px solid;
+	margin: 10px 0px;
+	padding:15px 10px 15px 50px;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+}
+
+.msg-info {
+	color: #00529B;
+	background-color: #BDE5F8;
+	background-image: url('images/info.png');
+}
+
+.msg-success {
+	color: #4F8A10;
+	background-color: #DFF2BF;
+	background-image:url('images/success.png');
+}
+
+.msg-warning {
+	color: #9F6000;
+	background-color: #FEEFB3;
+	background-image: url('images/warning.png');
+}
+
+.msg-error {
+	color: #D8000C;
+	background-color: #FFBABA;
+	background-image: url('images/error.png');
+}
+
+.msg-validation {
+	color: #D63301;
+	background-color: #FFCCBA;
+	background-image: url('images/validation.png');
+}
+
+/*********************
+ * Grid styles
+ */
+
+/** main flex table styles */
+.advanced-Grid {
+    border-collapse: collapse;
+    padding: 2px 2px 2px 2px;
+    font-family: sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    color: black;
+}
+
+/** flex table cells styles */
+.advanced-Grid td, .advanced-Grid .subgrid-row .advanced-FocusPanel td {
+    border-bottom: 1px solid lightgray;
+}
+
+/** flex table header styles */
+.advanced-Grid thead {
+    background: white;
+}
+
+/** flex table head cells styles */
+.advanced-Grid th {
+    border-left: 1px solid white;
+    padding: 0;
+    background: url( com.openscg.pgstudio.PgStudio/gwt/clean/images/gradient.gif ) repeat-x;
+    font-family: sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+}
+
+.advanced-Grid th .gwt-Label {
+    height: 19px;
+    padding: 3px 0;
+}
+
+/** data cells nested panel styles (if editable) */
+.advanced-Grid .editable-cell {
+    cursor: pointer;
+}
+
+/** data cells nested panel styles (if readonly) */
+.advanced-Grid .readonly-cell {
+    cursor: default;
+}
+
+/** header cells nested panel styles */
+.advanced-Grid .header-cell {
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    padding: 3px 0;
+    background-color: transparent;
+}
+
+/** header cells nested panel table styles */
+.advanced-Grid .header-cell table {
+    font-family: sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    display: inline;
+}
+
+/** header cells nested panel table styles */
+.advanced-Grid .header-cell td {
+    text-align: center;
+    height: 100%;
+    border-bottom: 0;
+}
+
+.advanced-Grid .header-cell div {
+    white-space: nowrap;
+}
+
+.advanced-Grid .header-cell img {
+    width: 15px;
+    height: 10px;
+}
+
+/** header sortable cells nested panel styles */
+.advanced-Grid .sortable-header table {
+    cursor: pointer;
+}
+
+/** header non-sortable cells nested panel styles */
+.advanced-Grid .non-sortable-header, .advanced-Grid .sortable-header  {
+    cursor: default;
+}
+
+/** grid selected row styles */
+.advanced-Grid .selected-row {
+    background-color: #D7E9FF;
+}
+
+/** grid selected cell styles */
+.advanced-Grid .selected-column {
+}
+
+/** grid selected cell */
+.advanced-Grid .selected-cell {
+    background-color: #99ccff;
+}
+
+/** grid column styles */
+.advanced-Grid .grid-column {
+}
+
+/** data cell nested panel styles */
+.advanced-Grid .data-cell {
+    font-family: sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    color: black;
+    padding-left: 1px;
+}
+
+/** data cell nested panel styles (if active) */
+.advanced-Grid .active-cell {
+    background-color: transparent;
+    border: 1px #dddbdb dotted;
+    padding: 0;
+}
+
+/** input controls styles */
+.advanced-Grid .active-cell input {
+    width: 100%;
+    font-family: sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+    height: 13px;
+}
+
+/** select box controls styles */
+.advanced-Grid .active-cell select {
+    width: 100%;
+    font-family: sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+}
+
+/** data cell nested panel styles (if passive) */
+.advanced-Grid .passive-cell {
+    background-color: transparent;
+    border: 0;
+    padding: 1px;
+}
+
+/** textual cell additional styles */
+.advanced-Grid .text-cell {
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+/** textual cell additional styles */
+.advanced-Grid .text-cell div {
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+/** numeric cell additional styles */
+.advanced-Grid .numeric-cell {
+    text-align: right;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+/** numeric cell additional styles */
+.advanced-Grid .numeric-cell div {
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+/** list cell additional styles */
+.advanced-Grid .list-cell {
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+/** list cell additional styles */
+.advanced-Grid .list-cell div {
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+/** image cell additional styles */
+.advanced-Grid .image-cell {
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+/** boolean cell additional styles */
+.advanced-Grid .boolean-cell {
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+/** date cell additional styles */
+.advanced-Grid .date-cell {
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+/** date cell additional styles */
+.advanced-Grid .date-cell div {
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+/** subtree pager left arrow style */
+.advanced-Grid .subtree-pager .arrow-left {
+    cursor: pointer;
+}
+
+/** subtree pager right arrow style */
+.advanced-Grid .subtree-pager .arrow-right {
+    cursor: pointer;
+}
+
+.StudioPopup {
+	border-right: 1px solid #bbbbbb;
+	border-left: 1px solid #bbbbbb;
+	border-top: 1px solid #bbbbbb;
+	border-bottom: 1px solid #bbbbbb;
+	background-image: url(images/bg_dialog.png);
+    background-repeat: repeat-y;
+}
+
+.StudioPopup .gwt-Button {
+	border: 1px solid #1B82CD;
+	border-bottom: 1px solid #1B82CD;
+	border-radius: 30px;
+	background: url("images/button_bg.png") repeat-x;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px !important;
+	font-weight: bold;
+	width: 80px;
+}
+
+.StudioPopup-Msg {
+	color: #005A8C;
+    font-family: arial, sans-serif;
+    font-size: 15px;
+}
+
+.StudioPopup-Msg-Strong {
+	color: #005A8C;
+    font-family: arial, sans-serif;
+    font-size: 18px;
+	font-weight: bold;
+    padding-bottom: 5px;
+}
+
+.StudioPopup input.text,input.textarea,input.password {
+	font-size: 16px;
+}
+
+.StudioPopup input.password:focus,input.text:focus,textarea:focus {
+	border-color: #007934;
+	font-size: 16px;
+	background: white;
+	border: 2px solid #DDD;
+	padding: 2px;
+}
+
+.roundedCheck {
+	width: 28px;
+	height: 28px;
+	background: #fcfff4;
+
+	background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	background: -moz-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	background: -o-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	background: -ms-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead',GradientType=0 );
+	margin: 10px auto;
+
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+
+	-webkit-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+	-moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+	box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+	position: relative;
+}
+
+.roundedCheck label {
+	cursor: pointer;
+	position: absolute;
+	width: 20px;
+	height: 20px;
+
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+	left: 4px;
+	top: 4px;
+
+	-webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
+	-moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
+	box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
+
+	background: -webkit-linear-gradient(top, #222 0%, #45484d 100%);
+	background: -moz-linear-gradient(top, #222 0%, #45484d 100%);
+	background: -o-linear-gradient(top, #222 0%, #45484d 100%);
+	background: -ms-linear-gradient(top, #222 0%, #45484d 100%);
+	background: linear-gradient(top, #222 0%, #45484d 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#222', endColorstr='#45484d',GradientType=0 );
+}
+
+.roundedCheck label:after {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: alpha(opacity=0);
+	opacity: 0;
+	content: '';
+	position: absolute;
+	width: 9px;
+	height: 5px;
+	background: transparent;
+	top: 5px;
+	left: 4px;
+	border: 3px solid #fcfff4;
+	border-top: none;
+	border-right: none;
+
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+
+.roundedCheck label:hover::after {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+	filter: alpha(opacity=30);
+	opacity: 0.3;
+}
+
+.roundedCheck input[type=checkbox]:checked + label:after {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+	filter: alpha(opacity=100);
+	opacity: 1;
+}
+
+.StudioCaption {
+    padding-top:10px;
+    border:1px solid #666;
+    border-radius:8px;
+    margin: 10px;
+}
+
+.StudioCaption legend {
+  padding: 0.2em 0.5em;
+  font-size:90%;
+  border: 1px solid;
+  border-radius: 8px;
+  }
+

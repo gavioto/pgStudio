@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<project name="pgStudio" basedir="." default="war">
+ 
+    <property name="gwt.module.name" value="com.openscg.pgstudio.PgStudio"/>
+    <property name="server.resources.name" value="server_resources"/>
+    <property name="file.name" value="pgstudio"/>
+    <property name="jar.name" value="${file.name}.jar"/>
+    <property name="war.name" value="${file.name}.war"/>
+    <property name="src.dir" location="src"/>
+    <property name="server.resources.dir" location="war/${server.resources.name}"/>
+    <property name="build.dir" location="build"/>    
+    <property name="build.server.resources.dir" location="war/WEB-INF/classes/server_resources"/>        
+    <property name="lib.dir" location="war/WEB-INF/lib"/>
+    <property name="gwt.client.dir" location="com/openscg/pgstudio/client"/>
+     
+    <path id="project.classpath">        
+      <fileset dir="${lib.dir}">
+        <include name="**/*.jar"/>
+      </fileset>
+    </path>
+         
+    <target name="prepare">
+      <mkdir dir="${build.dir}"/>
+    </target>
+        
+    <target name="clean">
+      <delete dir="${build.dir}"/>
+      <delete dir="gwt-unitCache"/>
+      <delete dir="war/WEB-INF/deploy"/>
+      <delete dir="war/WEB-INF/classes"/>
+      <delete dir="deploy"/>
+      <delete dir="war/com.openscg.pgstudio.PgStudio"/>
+      <delete file="${war.name}"/>
+      <delete file="${lib.dir}/${jar.name}"/>
+    </target>
+        
+    <!-- Compile the java source code using javac -->
+    <target name="compile" depends="prepare">        
+      <javac srcdir="${src.dir}" destdir="${build.dir}">
+        <classpath refid="project.classpath"/>
+      </javac>        
+    </target>
+      
+    <!-- Invoke the GWT compiler to create the Javascript for us -->
+    <target name="gwt-compile" depends="compile">
+      <java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler">
+        <classpath>
+          <pathelement location="${src.dir}"/>                
+          <pathelement location="${build.dir}"/>
+          <path refid="project.classpath"/>
+        </classpath>
+        <jvmarg value="-Xmx384M"/>
+        <arg value="${gwt.module.name}"/>
+      </java>
+    </target>
+         
+    <!-- Package the compiled Java source into a JAR file -->
+    <target name="jar" depends="compile">        
+      <jar jarfile="${lib.dir}/${jar.name}" basedir="${build.dir}/">
+        <!-- Don't wrap any of the client only code into the JAR -->
+        <exclude name="${gwt.client.dir}/**/*.class"/>
+      </jar>    
+    </target>
+            
+    <!-- Copy the static server resources into the required 
+    directory ready for packaging -->    
+    <target name="copy-resources"/>  
+      
+    <!-- Package the JAR file, Javascript, static resources 
+    and external libraries into a WAR file -->
+    <target name="war" depends="gwt-compile, jar, copy-resources">
+      <war basedir="war" destfile="${war.name}" webxml="war/WEB-INF/web.xml">
+        <exclude name="WEB-INF/**" />
+        <exclude name="${server.resources.name}/**"/>
+        <webinf dir="war/WEB-INF/">
+          <include name="classes/${server.resources.name}/**" />
+          <include name="**/*.jar" />
+          <exclude name="**/gwt-dev.jar" />
+          <exclude name="**/gwt-user.jar" />
+        </webinf>
+      </war>
+    </target>
+        
+    <!-- Deploy the WAR file (optional) -->
+	<target name="deploy" depends="war">
+            <mkdir dir="deploy"/>
+	    <copy file="${war.name}" todir="deploy" />
+
+            <tar destfile="deploy/${file.name}.tar.gz" compression="gzip">
+              <tarfileset dir="deploy">
+                 <include name="${war.name}"/>
+              </tarfileset>
+            </tar>
+
+            <tar destfile="deploy/${file.name}.tar.bz2" compression="bzip2">
+              <tarfileset dir="deploy">
+                 <include name="${war.name}"/>
+              </tarfileset>
+            </tar>
+
+            <zip destfile="deploy/${file.name}.zip">
+              <zipfileset dir="deploy">
+                  <include name="${war.name}"/>
+              </zipfileset>
+            </zip>
+	</target>
+    
+</project>

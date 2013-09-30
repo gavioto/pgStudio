@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <!-- Inherit the core Web Toolkit stuff.                        -->
+  <inherits name='com.google.gwt.user.User'/>
+
+  <!-- Inherit the default GWT style sheet.  You can change       -->
+  <!-- the theme of your GWT application by uncommenting          -->
+  <!-- any one of the following lines.                            -->
+  <inherits name='com.google.gwt.user.theme.clean.Clean'/>   
+  
+  <!-- Browser-sensitive code should use the 'user.agent' property -->
+  <extend-property name="user.agent" values="ie8" />
+  <extend-property name="user.agent" values="gecko1_8" />
+  <extend-property name="user.agent" values="safari" />
+  <extend-property name="user.agent" values="opera" />
+  <extend-property name="user.agent" values="ie9" fallback-value="ie8" />
+  <property-provider name="user.agent" generator="com.google.gwt.user.rebind.UserAgentPropertyGenerator"/>
+  
+  <!-- <inherits name='com.google.gwt.user.theme.standard.Standard'/> -->
+  <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
+  <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
+
+  <!-- Other module inherits                                      -->
+  <inherits name="com.smartgwt.SmartGwt"/>
+  
+  <inherits name="com.google.gwt.json.JSON" />
+  <inherits name='com.mastergaurav.codemirror.CodeMirror' />
+  <inherits name='org.gwt.advanced.Grid'/>
+
+  <!-- Specify the app entry point class.                         -->
+  <entry-point class='com.openscg.pgstudio.client.PgStudio'/>
+
+  <!-- Specify the paths for translatable code                    -->
+  <source path='client'/>
+  <source path='shared'/>
+
+  <generate-with class="com.google.gwt.user.rebind.UserAgentGenerator">
+    <when-type-assignable class="com.google.gwt.user.client.UserAgentAsserter.UserAgentProperty" />
+  </generate-with>
+
+  <!-- Deferred binding to optimize JRE classes based on user agent. -->
+  <inherits name="com.google.gwt.emul.EmulationWithUserAgent"/>
+  <inherits name="com.google.gwt.core.CoreWithUserAgent"/>
+  
+  
+</module>
