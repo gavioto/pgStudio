@@ -14,7 +14,7 @@
   <extend-property name="user.agent" values="safari" />
   <extend-property name="user.agent" values="opera" />
   <extend-property name="user.agent" values="ie9" fallback-value="ie8" />
-  <property-provider name="user.agent" generator="com.google.gwt.user.rebind.UserAgentPropertyGenerator"/>
+  <property-provider name="user.agent" generator="com.google.gwt.useragent.rebind.UserAgentPropertyGenerator"/>
   
   <!-- <inherits name='com.google.gwt.user.theme.standard.Standard'/> -->
   <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
@@ -34,8 +34,8 @@
   <source path='client'/>
   <source path='shared'/>
 
-  <generate-with class="com.google.gwt.user.rebind.UserAgentGenerator">
-    <when-type-assignable class="com.google.gwt.user.client.UserAgentAsserter.UserAgentProperty" />
+  <generate-with class="com.google.gwt.useragent.rebind.UserAgentGenerator">
+    <when-type-assignable class="com.google.gwt.useragent.client.UserAgentAsserter.UserAgentProperty" />
   </generate-with>
 
   <!-- Deferred binding to optimize JRE classes based on user agent. -->
