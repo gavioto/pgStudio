@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="pgStudio" basedir="." default="war">
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="pgStudio" basedir="." default="war">
  
     <property name="gwt.module.name" value="com.openscg.pgstudio.PgStudio"/>
     <property name="server.resources.name" value="server_resources"/>
@@ -10,15 +10,27 @@
     <property name="server.resources.dir" location="war/${server.resources.name}"/>
     <property name="build.dir" location="build"/>    
     <property name="build.server.resources.dir" location="war/WEB-INF/classes/server_resources"/>        
-    <property name="lib.dir" location="war/WEB-INF/lib"/>
+    <property name="lib.dir" location="lib"/>
     <property name="gwt.client.dir" location="com/openscg/pgstudio/client"/>
      
+    <property name="ivy.install.version" value="2.3.0" />
+    <condition property="ivy.home" value="${env.IVY_HOME}">
+      <isset property="env.IVY_HOME" />
+    </condition>
+    <property name="ivy.home" value="${user.home}/.ant" />
+    <property name="ivy.jar.dir" value="${ivy.home}/lib" />
+    <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" />
+
     <path id="project.classpath">        
       <fileset dir="${lib.dir}">
         <include name="**/*.jar"/>
       </fileset>
     </path>
          
+    <presetdef name="javac">
+        <javac includeantruntime="false" />
+    </presetdef>
+
     <target name="prepare">
       <mkdir dir="${build.dir}"/>
     </target>
@@ -29,13 +41,40 @@
       <delete dir="war/WEB-INF/deploy"/>
       <delete dir="war/WEB-INF/classes"/>
       <delete dir="deploy"/>
+      <delete dir="lib"/>
+      <delete dir="war/WEB-INF/lib"/>
       <delete dir="war/com.openscg.pgstudio.PgStudio"/>
       <delete file="${war.name}"/>
       <delete file="${lib.dir}/${jar.name}"/>
     </target>
         
+    <target name="download-ivy" unless="offline">
+
+        <mkdir dir="${ivy.jar.dir}"/>
+        <!-- download Ivy from web site so that it can be used even without any special installation -->
+        <get src="http://repo2.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar" 
+             dest="${ivy.jar.file}" usetimestamp="true"/>
+    </target>
+
+    <target name="init-ivy" depends="download-ivy">
+      <!-- try to load ivy here from ivy home, in case the user has not already dropped
+              it into ant's lib dir (note that the latter copy will always take precedence).
+              We will not fail as long as local lib dir exists (it may be empty) and
+              ivy is in at least one of ant's lib dir or the local lib dir. -->
+        <path id="ivy.lib.path">
+            <fileset dir="${ivy.jar.dir}" includes="*.jar"/>
+
+        </path>
+        <taskdef resource="org/apache/ivy/ant/antlib.xml"
+                 uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
+    </target>
+
+    <target name="resolve" depends="init-ivy">
+        <ivy:retrieve />
+    </target>
+
     <!-- Compile the java source code using javac -->
-    <target name="compile" depends="prepare">        
+    <target name="compile" depends="prepare, resolve">        
       <javac srcdir="${src.dir}" destdir="${build.dir}">
         <classpath refid="project.classpath"/>
       </javac>        
@@ -64,7 +103,11 @@
             
     <!-- Copy the static server resources into the required 
     directory ready for packaging -->    
-    <target name="copy-resources"/>  
+    <target name="copy-resources">  
+       <copy todir="war/WEB-INF/lib">
+           <fileset dir="lib"/>
+       </copy>
+    </target>
       
     <!-- Package the JAR file, Javascript, static resources 
     and external libraries into a WAR file -->
@@ -75,8 +118,10 @@
         <webinf dir="war/WEB-INF/">
           <include name="classes/${server.resources.name}/**" />
           <include name="**/*.jar" />
-          <exclude name="**/gwt-dev.jar" />
-          <exclude name="**/gwt-user.jar" />
+          <exclude name="**/gwt-dev*.jar" />
+          <exclude name="**/gwt-user*.jar" />
+          <exclude name="**/*sources*.jar" />
+          <exclude name="**/*javadoc*.jar" />
         </webinf>
       </war>
     </target>
