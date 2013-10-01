@@ -4,6 +4,7 @@
     <property name="gwt.module.name" value="com.openscg.pgstudio.PgStudio"/>
     <property name="server.resources.name" value="server_resources"/>
     <property name="file.name" value="pgstudio"/>
+    <property name="file.version" value="1.0"/>
     <property name="jar.name" value="${file.name}.jar"/>
     <property name="war.name" value="${file.name}.war"/>
     <property name="src.dir" location="src"/>
@@ -126,28 +127,65 @@
       </war>
     </target>
         
-    <!-- Deploy the WAR file (optional) -->
+    <!-- Create the deployment packages (optional) -->
 	<target name="deploy" depends="war">
             <mkdir dir="deploy"/>
 	    <copy file="${war.name}" todir="deploy" />
 
-            <tar destfile="deploy/${file.name}.tar.gz" compression="gzip">
+            <tar destfile="deploy/${file.name}_${file.version}.tar.gz" compression="gzip">
               <tarfileset dir="deploy">
                  <include name="${war.name}"/>
               </tarfileset>
             </tar>
 
-            <tar destfile="deploy/${file.name}.tar.bz2" compression="bzip2">
+            <tar destfile="deploy/${file.name}_${file.version}.tar.bz2" compression="bzip2">
               <tarfileset dir="deploy">
                  <include name="${war.name}"/>
               </tarfileset>
             </tar>
 
-            <zip destfile="deploy/${file.name}.zip">
+            <zip destfile="deploy/${file.name}_${file.version}.zip">
               <zipfileset dir="deploy">
                   <include name="${war.name}"/>
               </zipfileset>
             </zip>
+
+            <mkdir dir="deploy/${file.name}-src_${file.version}"/>
+            <copy file="build.xml" todir="deploy/${file.name}-src_${file.version}"/>
+            <copy file="ivy.xml" todir="deploy/${file.name}-src_${file.version}"/>
+            <copy file="README" todir="deploy/${file.name}-src_${file.version}"/>
+            <copy file="LICENSE" todir="deploy/${file.name}-src_${file.version}"/>
+            <copy todir="deploy/${file.name}-src_${file.version}/src">
+                <fileset dir="src"/>
+            </copy>
+            <copy file="war/PgStudio.jsp" todir="deploy/${file.name}-src_${file.version}/war"/>
+            <copy file="war/PgStudio.css" todir="deploy/${file.name}-src_${file.version}/war"/>
+            <copy todir="deploy/${file.name}-src_${file.version}/war/images">
+                <fileset dir="war/images"/>
+            </copy>
+            <copy todir="deploy/${file.name}-src_${file.version}/war/server_resources">
+                <fileset dir="war/server_resources"/>
+            </copy>
+             <copy file="war/WEB-INF/web.xml" todir="deploy/${file.name}-src_${file.version}/war/WEB-INF"/>
+
+            <tar destfile="deploy/${file.name}-src_${file.version}.tar.gz" compression="gzip">
+                <tarfileset dir="deploy">
+                  <include name="${file.name}-src_${file.version}/**"/>
+                </tarfileset>
+            </tar>
+
+            <tar destfile="deploy/${file.name}-src_${file.version}.tar.bz2" compression="bzip2">
+               <tarfileset dir="deploy">
+                  <include name="${file.name}-src_${file.version}/**"/>
+                </tarfileset>
+            </tar>
+
+            <zip destfile="deploy/${file.name}-src_${file.version}.zip">
+              <zipfileset dir="deploy">
+                  <include name="${file.name}-src_${file.version}/**"/>
+              </zipfileset>
+            </zip>
+
 	</target>
     
 </project>
