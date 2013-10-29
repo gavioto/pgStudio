@@ -232,10 +232,8 @@ public class PgStudio implements EntryPoint {
 		connDetails.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		connDetails.setVerticalAlignment(HasVerticalAlignment.ALIGN_BOTTOM);
 		
-		final Label connInfo = new Label();
-		connInfo.setWidth("150px");
-		connInfo.setWordWrap(true);
-		connInfo.setText("");
+		final HTML connInfo = new HTML();
+		connInfo.setHTML("");
 		connInfo.setStyleName("studio-Label-Small");
 		connInfo.setHeight("45px");
 		connDetails.add(connInfo);
@@ -253,8 +251,8 @@ public class PgStudio implements EntryPoint {
             }
 
             public void onSuccess(String result) {
-            	String msg = "Connected to " + result;
-            	connInfo.setText(msg);
+            	String msg = "Connected to " + result.replace(" as ", "<br/> as ");
+            	connInfo.setHTML("<div>" + msg + "</div>");
             }
           });
 
