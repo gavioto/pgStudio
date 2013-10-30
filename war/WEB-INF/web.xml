@@ -7,7 +7,7 @@
   
   	<context-param>
 		<param-name>home_url</param-name>
-		<param-value>/pgstudio/PgStudio.jsp</param-value>
+		<param-value>PgStudio.jsp</param-value>
 		<!-- Use this URL with debugging in Eclispe  
 		<param-value>http://127.0.0.1:8888/PgStudio.jsp?gwt.codesvr=127.0.0.1:9997</param-value>
 		-->
@@ -36,7 +36,7 @@
 
   <servlet-mapping>
     <servlet-name>loginHandler</servlet-name>
-    <url-pattern>/com.openscg.pgstudio.PgStudio/login</url-pattern>
+    <url-pattern>/login</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

@@ -53,7 +53,7 @@
         }
 %>
       <div class="connect">
-        <form name="sdb_11_11_28" class="connectform" method="post" action="com.openscg.pgstudio.PgStudio/login">
+        <form name="sdb_11_11_28" class="connectform" method="post" action="login">
             <fieldset>
                 <div class="row clearfix">
                     <label class="connectlabel " for="id_db_host">Database Host</label>
