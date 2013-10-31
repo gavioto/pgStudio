@@ -57,6 +57,31 @@ public class Privileges {
 			+ "   AND p.routine_name = c.proname "
 			+ "   AND c.pronamespace = n.oid " + "   AND c.oid = ? ";
 
+	private final static String RELATION_PRIVS =
+			"SELECT u_grantor.rolname AS grantor, grantee.rolname AS grantee," +
+			"       c.prtype AS privilege_type," +
+			"       CASE WHEN" +
+			"            pg_has_role(grantee.oid, c.relowner, 'USAGE')" +
+			"            OR c.grantable" +
+			"            THEN 'YES' ELSE 'NO' END AS is_grantable," +
+			"       CASE WHEN c.prtype = 'SELECT' THEN 'YES' ELSE 'NO' END AS with_hierarchy" +
+			"  FROM (SELECT oid, relname, relnamespace, " +
+			"               relkind, relowner, " +
+			"               (aclexplode(coalesce(relacl, acldefault('r', relowner)))).* " +
+			"          FROM pg_class" +
+			"       ) AS c (oid, relname, relnamespace, relkind, relowner, grantor, grantee, prtype, grantable)," +
+			"       pg_authid u_grantor," +
+			"       (SELECT oid, rolname FROM pg_authid" +
+			"         UNION ALL" +
+			"        SELECT 0::oid, 'PUBLIC') AS grantee (oid, rolname)" +
+			" WHERE c.grantee = grantee.oid" +
+			"   AND c.grantor = u_grantor.oid" +
+			"   AND c.prtype IN ('INSERT', 'SELECT', 'UPDATE', 'DELETE', 'TRUNCATE', 'REFERENCES', 'TRIGGER')" +
+			"   AND (pg_has_role(u_grantor.oid, 'USAGE')" +
+			"        OR pg_has_role(grantee.oid, 'USAGE')" +
+			"        OR grantee.rolname = 'PUBLIC')" +
+			"   AND c.oid = ? ";
+	
 	private final static String SEQUENCE_PRIVS = "SELECT CAST(grantee.rolname AS varchar) AS grantee, "
 			+ "       CAST(c.prtype AS varchar) AS privilege_type, "
 			+ "       CAST( "
@@ -115,6 +140,8 @@ public class Privileges {
 			return "";
 
 		switch (type) {
+		case FOREIGN_TABLE:
+			return getRelationPrivs(item);
 		case FUNCTION:
 			return getFunctionPrivs(item);
 		case SEQUENCE:
@@ -188,6 +215,27 @@ public class Privileges {
 			jsonMessage.put("type", rs.getString(2));
 			jsonMessage.put("grantable", rs.getString(3));
 			jsonMessage.put("grantor", rs.getString(4));
+
+			result.add(jsonMessage);
+		}
+
+		return result.toString();
+	}
+
+	private String getRelationPrivs(int item) throws SQLException {
+		JSONArray result = new JSONArray();
+
+		PreparedStatement stmt = conn.prepareStatement(RELATION_PRIVS);
+		stmt.setInt(1, item);
+
+		ResultSet rs = stmt.executeQuery();
+
+		while (rs.next()) {
+			JSONObject jsonMessage = new JSONObject();
+			jsonMessage.put("grantee", rs.getString("grantee"));
+			jsonMessage.put("type", rs.getString("privilege_type"));
+			jsonMessage.put("grantable", rs.getString("is_grantable"));
+			jsonMessage.put("grantor", rs.getString("grantor"));
 
 			result.add(jsonMessage);
 		}
