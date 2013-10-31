@@ -42,7 +42,7 @@ public class SourceCode {
 			"             AND array_length(ct.conkey, 1) = 1 " +
 			"             AND a.attnum = ct.conkey[1])  " +
 			"  WHERE c.oid = a.attrelid " +
-			"    AND c.relkind = 'r' " +
+			"    AND c.relkind = ? " +
 			"    AND c.oid = ? " +
 			"    AND a.attnum > 0 " +
 			"    AND NOT a.attisdropped " +
@@ -117,6 +117,16 @@ public class SourceCode {
 		" WHERE c.relkind = 'v' " +
 		"   AND c.oid = ? ";
 
+	private final static String GET_FOREIGN_SERVER = 
+			"SELECT s.srvname " +
+			"  FROM pg_foreign_table t, pg_foreign_server s " +
+			" WHERE t.ftserver = s.oid " +
+			"   AND t.ftrelid = ? ";
+	
+	private final static String GET_OPTIONS = 
+			"SELECT unnest(ftoptions) AS option " +
+			"  FROM pg_foreign_table " +
+			" WHERE ftrelid = ? ";
 	
 	public SourceCode(Connection conn) {
 		this.conn = conn;
@@ -124,6 +134,8 @@ public class SourceCode {
 	
 	public String getSourceCode(int item, ITEM_TYPE type) throws SQLException {
 		switch (type) {
+		case FOREIGN_TABLE:
+			return getForeignTableCode(item);
 		case FUNCTION:
 			return getFunctionCode(item);
 		case SEQUENCE:
@@ -218,6 +230,91 @@ public class SourceCode {
 				result = result + "\t(" + enums + ")";
 			}
 						
+		return result;
+	}
+
+	private String getForeignTableCode(int item) throws SQLException {
+		String result = "";
+		PreparedStatement stmt = null;
+		
+		try {
+			Database db = new Database(conn);
+			String name = db.getItemFullName(item, ITEM_TYPE.FOREIGN_TABLE);
+
+			stmt = conn.prepareStatement(COLUMN_SOURCE);
+			stmt.setString(1, "f");
+			stmt.setInt(2, item);
+
+			ResultSet rs = stmt.executeQuery();
+
+			result = "CREATE FOREIGN TABLE " + name + " (\n";
+
+			String columns = "";
+			while (rs.next()) {
+				columns = columns + "\t " + rs.getString(1);
+				columns = columns + "\t " + rs.getString(2);
+
+				if (rs.getBoolean(3)) {
+					columns = columns + "\t NOT NULL";
+				}
+
+				String constraintDef = rs.getString(4);
+
+				if (constraintDef != null) {
+					if (constraintDef.toUpperCase().startsWith("PRIMARY KEY")) {
+						columns = columns + "\t " + "PRIMARY KEY";
+					} else if (constraintDef.toUpperCase().startsWith("UNIQUE")) {
+						columns = columns + "\t " + "UNIQUE";
+					} else if (constraintDef.toUpperCase().startsWith(
+							"FOREIGN KEY")) {
+						columns = columns
+								+ "\t "
+								+ constraintDef.substring(constraintDef
+										.toUpperCase().indexOf("REFERENCES"));
+					} else {
+						columns = columns + "\t " + constraintDef;
+					}
+				}
+
+				columns = columns + ",\n";
+			}
+
+			result = result + columns.substring(0, columns.lastIndexOf(","))
+					+ "\n)";
+
+			stmt.close();
+			stmt = conn.prepareStatement(GET_FOREIGN_SERVER);
+			stmt.setInt(1, item);
+
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				result = result + "\nSERVER " + rs.getString(1);
+			}
+			
+			stmt.close();
+			stmt = conn.prepareStatement(GET_OPTIONS);
+			stmt.setInt(1, item);
+
+			rs = stmt.executeQuery();
+
+			String options = "";
+			while (rs.next()) {
+				if (!options.equals(""))
+					options = options + ", ";
+					
+				String option = rs.getString("option");
+				options = options + option.split("=")[0] + " '" + option.split("=")[1] + "'";
+			}
+
+			if (!options.equals("")) {
+				result = result + "\nOPTIONS (" + options + ")";
+			}
+			
+		} finally {
+			if (stmt != null)
+				stmt.close();
+		}
 		return result;
 	}
 
@@ -319,7 +416,8 @@ public class SourceCode {
 		String name = db.getItemFullName(item, ITEM_TYPE.TABLE);
 
 		PreparedStatement stmt = conn.prepareStatement(COLUMN_SOURCE);
-		stmt.setInt(1, item);
+		stmt.setString(1, "r");
+		stmt.setInt(2, item);
 
 		ResultSet rs = stmt.executeQuery();
 
