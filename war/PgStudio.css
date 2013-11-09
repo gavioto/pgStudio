@@ -27,8 +27,8 @@ h1 {
 
 #headerlarge {
     margin: 0 auto 5px;
-    width: 350px;
-    background: url(images/logo.png) no-repeat left center;
+    width: 400px;
+    background: url(images/logo.png) no-repeat center;
     padding: 12px 0 8px 75px;
     text-shadow: 0 0 5px rgba(255,255,255,0.5);
 }

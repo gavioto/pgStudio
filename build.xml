@@ -4,7 +4,7 @@
     <property name="gwt.module.name" value="com.openscg.pgstudio.PgStudio"/>
     <property name="server.resources.name" value="server_resources"/>
     <property name="file.name" value="pgstudio"/>
-    <property name="file.version" value="1.0"/>
+    <property name="file.version" value="1.1"/>
     <property name="jar.name" value="${file.name}.jar"/>
     <property name="war.name" value="${file.name}.war"/>
     <property name="src.dir" location="src"/>
@@ -113,6 +113,9 @@
     <!-- Package the JAR file, Javascript, static resources 
     and external libraries into a WAR file -->
     <target name="war" depends="gwt-compile, jar, copy-resources">
+      <tstamp>
+        <format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss" />
+      </tstamp>
       <war basedir="war" destfile="${war.name}" webxml="war/WEB-INF/web.xml">
         <exclude name="WEB-INF/**" />
         <exclude name="${server.resources.name}/**"/>
@@ -124,6 +127,10 @@
           <exclude name="**/*sources*.jar" />
           <exclude name="**/*javadoc*.jar" />
         </webinf>
+        <manifest>
+          <attribute name="Built-On" value="${TODAY}" />
+          <attribute name="Implementation-Version" value="${file.version}" />
+        </manifest>
       </war>
     </target>
         

@@ -32,7 +32,7 @@
  <body class="login">
   <div class="content grid">
         <div id="headerlarge">
-          <h1>PostgreSQL Studio</h1>
+        <h1></h1>
           <p></p>
       </div>
   
@@ -132,7 +132,7 @@
 
   <div class="studiocontainer widebase ">
     <div class="studiocontainer-header">
-      <h3>PostgreSQL Studio</h3>
+      <h3></h3>
     </div>
     <div class="studiocontainer-body">
 
