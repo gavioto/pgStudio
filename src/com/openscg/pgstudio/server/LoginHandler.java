@@ -46,6 +46,7 @@ public void doPost(HttpServletRequest req, HttpServletResponse res)
 
     String clientIP = req.getRemoteAddr();
     String userAgent = req.getHeader("User-Agent");
+    String queryString = req.getQueryString();
     
     String token = "";
     
@@ -67,12 +68,16 @@ public void doPost(HttpServletRequest req, HttpServletResponse res)
 	}
 
     // Try redirecting the client to the page he first tried to access
-    try {
-    	String target  = this.getServletContext().getInitParameter("home_url");
+	try {
+		String target = this.getServletContext().getInitParameter("home_url");
 
-      res.sendRedirect(target);
-      return;
-    } catch (Exception ignored) { }
+		if (queryString != null)
+			target = target + "?"+ queryString;
+
+		res.sendRedirect(target);
+		return;
+	} catch (Exception ignored) {
+	}
 
   }
 }
