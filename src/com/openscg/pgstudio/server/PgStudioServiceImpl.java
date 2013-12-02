@@ -53,6 +53,7 @@ import com.openscg.pgstudio.server.models.Tables;
 import com.openscg.pgstudio.server.models.Triggers;
 import com.openscg.pgstudio.server.models.Types;
 import com.openscg.pgstudio.server.models.Views;
+import com.openscg.pgstudio.server.util.ConnectionInfo;
 import com.openscg.pgstudio.server.util.ConnectionManager;
 import com.openscg.pgstudio.server.util.QueryExecutor;
 import com.openscg.pgstudio.server.util.QuotingLogic;
@@ -77,13 +78,14 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 	 * USER_INITIATED : pass this when logging out from the Disconnect button
 	 * SESSION_TIMEOUT : pass this when logging out due to timeout.
 	 */
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
+		String clientIP = ConnectionInfo.remoteAddr(this.getThreadLocalRequest());
 		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
 		ConnectionManager connMgr = new ConnectionManager();
 
 		connMgr.closeConnection(connectionToken, clientIP, userAgent);
 
 		if (getThreadLocalRequest().getSession() != null)	{
+			getThreadLocalRequest().getSession().invalidate();
 			if(source.equals("WINDOW_CLOSE"))	{
 				getThreadLocalRequest().getSession().invalidate();
 	    	}
@@ -108,7 +110,7 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 		
 		ConnectionManager connMgr = new ConnectionManager();
 		
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
+		String clientIP = ConnectionInfo.remoteAddr(this.getThreadLocalRequest());
 		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
 		
 		Connection conn = connMgr.getConnection(connectionToken,clientIP, userAgent);

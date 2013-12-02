@@ -30,6 +30,7 @@ import java.util.Date;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.codec.binary.Hex;
 
@@ -42,6 +43,9 @@ public class ConnectionInfo {
 	
 	private static String delimiter = "---";
 	
+	private static final String HEADER_X_FORWARDED_FOR =
+	        "X-FORWARDED-FOR";
+
 	private final String token;
 	private final String clientIP;
 	private final String userAgent;
@@ -190,4 +194,18 @@ public class ConnectionInfo {
 	public void setDatabaseVersion(int databaseVersion) {
 		this.databaseVersion = databaseVersion;
 	}
+	
+	public static String remoteAddr(HttpServletRequest request) {
+		String remoteAddr = request.getRemoteAddr();
+		String forwarded;
+		if ((forwarded = request.getHeader(HEADER_X_FORWARDED_FOR)) != null) {
+			remoteAddr = forwarded;
+			int idx = remoteAddr.indexOf(',');
+			if (idx > -1) {
+				remoteAddr = remoteAddr.substring(0, idx);
+			}
+		}
+		return remoteAddr;
+	}
+
 }
