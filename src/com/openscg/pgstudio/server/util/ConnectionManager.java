@@ -97,17 +97,19 @@ public class ConnectionManager {
 		String url = "jdbc:postgresql://" + databaseURL + ":" + 
 		             Integer.toString(databasePort) + "/" +
 		             databaseName;
+		
+		String sslSuffix = "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
 
 		try {
-			conn = DriverManager.getConnection(url, user, password);
+			// Try to connect using SSL first
+			conn = DriverManager.getConnection(url + sslSuffix, user, password);
 		} catch (SQLException e) {
-			if(e.getMessage().contains("SSL off")){
-				url += "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
-				try {
-					conn = DriverManager.getConnection(url, user, password);
-				} catch (SQLException e1) {
-					throw new DatabaseConnectionException(e1.getMessage(), DATABASE_ERROR_TYPE.INVALID_CONNECTION_STRING);
-				}
+			try {
+				// If SSL fails, try a clear connection
+				conn = DriverManager.getConnection(url, user, password);
+			} catch (SQLException e1) {
+				throw new DatabaseConnectionException(e1.getMessage(),
+						DATABASE_ERROR_TYPE.INVALID_CONNECTION_STRING);
 			}
 		}
 		
