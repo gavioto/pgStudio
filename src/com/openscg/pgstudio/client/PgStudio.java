@@ -222,7 +222,6 @@ public class PgStudio implements EntryPoint {
 	
 	private Widget getHeaderWidget() {
 		HorizontalPanel panel = new HorizontalPanel();
-		panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_JUSTIFY);
 		panel.setWidth("100%");
 		
 		Image logo = new Image(Images.logo());
