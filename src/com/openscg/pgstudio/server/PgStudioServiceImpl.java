@@ -28,6 +28,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.openscg.pgstudio.client.PgStudio.DATABASE_OBJECT_TYPE;
 import com.openscg.pgstudio.client.PgStudio.INDEX_TYPE;
 import com.openscg.pgstudio.client.PgStudio.ITEM_OBJECT_TYPE;
@@ -78,30 +80,32 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 	 * USER_INITIATED : pass this when logging out from the Disconnect button
 	 * SESSION_TIMEOUT : pass this when logging out due to timeout.
 	 */
-		String clientIP = ConnectionInfo.remoteAddr(this.getThreadLocalRequest());
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		HttpServletRequest request = this.getThreadLocalRequest();  
+
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 		ConnectionManager connMgr = new ConnectionManager();
 
 		connMgr.closeConnection(connectionToken, clientIP, userAgent);
 
-		if (getThreadLocalRequest().getSession() != null)	{
-			getThreadLocalRequest().getSession().invalidate();
+		if (request.getSession(false) != null)	{
 			if(source.equals("WINDOW_CLOSE"))	{
-				getThreadLocalRequest().getSession().invalidate();
+				request.getSession(false).invalidate();
 	    	}
 	    	else
 	    	if(source.equals("USER_INITIATED") || source.equals("SESSION_TIMEOUT"))	{
-	    		getThreadLocalRequest().getSession().setAttribute("dbToken", null);
-	    		getThreadLocalRequest().getSession().setAttribute("dbName", null);
-	    		getThreadLocalRequest().getSession().setAttribute("dbURL", null);
-	    		getThreadLocalRequest().getSession().setAttribute("username", null);
+	    		request.getSession(false).setAttribute("dbToken", null);
+	    		request.getSession(false).setAttribute("dbName", null);
+	    		request.getSession(false).setAttribute("dbURL", null);
+	    		request.getSession(false).setAttribute("username", null);
 	    	}
 		}
 	}
 
 	@Override
 	public void invalidateSession()	{
-		getThreadLocalRequest().getSession().invalidate();
+		HttpServletRequest request = this.getThreadLocalRequest();  
+		request.getSession(false).invalidate();
 	}
 
 	@Override
@@ -109,9 +113,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 			throws IllegalArgumentException, DatabaseConnectionException {
 		
 		ConnectionManager connMgr = new ConnectionManager();
+		HttpServletRequest request = this.getThreadLocalRequest();  
 		
-		String clientIP = ConnectionInfo.remoteAddr(this.getThreadLocalRequest());
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 		
 		Connection conn = connMgr.getConnection(connectionToken,clientIP, userAgent);
 
@@ -134,9 +139,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 			throws IllegalArgumentException, DatabaseConnectionException {
 		
 		ConnectionManager connMgr = new ConnectionManager();
-		
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		HttpServletRequest request = this.getThreadLocalRequest();  
+
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 		
 		Database db;
 		
@@ -166,10 +172,11 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 	public String getList(String connectionToken, int schema, ITEM_TYPE type)
 			throws IllegalArgumentException, DatabaseConnectionException {
 
-		ConnectionManager connMgr = new ConnectionManager();
-		
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		ConnectionManager connMgr = new ConnectionManager();		
+		HttpServletRequest request = this.getThreadLocalRequest();  
+
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		switch (type) {
 		case TABLE:
@@ -200,10 +207,11 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 	public String getRangeDiffFunctionList(String connectionToken, String schema, String subType)
 			throws IllegalArgumentException, DatabaseConnectionException {
 
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
-		
 		ConnectionManager connMgr = new ConnectionManager();
+		HttpServletRequest request = this.getThreadLocalRequest();  
+
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 		
 		Functions funcs;
 
@@ -218,10 +226,11 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 	public String getTriggerFunctionList(String connectionToken, int schema)
 			throws IllegalArgumentException, DatabaseConnectionException {
 
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
-		
 		ConnectionManager connMgr = new ConnectionManager();
+		HttpServletRequest request = this.getThreadLocalRequest();  
+
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 		
 		Functions funcs;
 
@@ -239,9 +248,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 			throws IllegalArgumentException, DatabaseConnectionException, PostgreSQLException {
 
 		ConnectionManager connMgr = new ConnectionManager();
+		HttpServletRequest request = this.getThreadLocalRequest();  
 
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 		
 		try {
 		switch (object) {
@@ -284,9 +294,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 	{
 
 		ConnectionManager connMgr = new ConnectionManager();
-		
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		HttpServletRequest request = this.getThreadLocalRequest();  
+
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 		
 		ItemMetaData id = new ItemMetaData(connMgr.getConnection(connectionToken,clientIP, userAgent));
 
@@ -303,9 +314,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 	{
 
 		ConnectionManager connMgr = new ConnectionManager();
-		
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		HttpServletRequest request = this.getThreadLocalRequest();  
+
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 		
 		ItemData id;
 
@@ -323,9 +335,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 			throws IllegalArgumentException, DatabaseConnectionException {
 
 		ConnectionManager connMgr = new ConnectionManager();
-		
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		HttpServletRequest request = this.getThreadLocalRequest();  
+
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 		
 		QueryMetaData id;
 
@@ -339,9 +352,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 			throws IllegalArgumentException, DatabaseConnectionException {
 
 		ConnectionManager connMgr = new ConnectionManager();
-		
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		HttpServletRequest request = this.getThreadLocalRequest();  
+
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 		
 		QueryExecutor id;
 
@@ -354,9 +368,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 	public String dropItem(String connectionToken, int item, ITEM_TYPE type, boolean cascade) 
 			throws IllegalArgumentException, DatabaseConnectionException, PostgreSQLException {
 		ConnectionManager connMgr = new ConnectionManager();
-		
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		HttpServletRequest request = this.getThreadLocalRequest();  
+
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		try {
 		switch (type) {
@@ -398,9 +413,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 			throws DatabaseConnectionException, PostgreSQLException {
 		
 		ConnectionManager connMgr = new ConnectionManager();
+		HttpServletRequest request = this.getThreadLocalRequest();  
 
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		try {
 		switch (objType) {
@@ -440,9 +456,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 			String newObjectName) throws DatabaseConnectionException, PostgreSQLException 
 	{
 		ConnectionManager connMgr = new ConnectionManager();
+		HttpServletRequest request = this.getThreadLocalRequest();  
 
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		try {
 		switch (objType) {
@@ -483,9 +500,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 	public String analyze(String connectionToken, int item, ITEM_TYPE type, boolean vacuum, boolean vacuumFull) 
 			throws IllegalArgumentException, DatabaseConnectionException, PostgreSQLException {
 		ConnectionManager connMgr = new ConnectionManager();
-		
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		HttpServletRequest request = this.getThreadLocalRequest();  
+
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		Tables tables;
 
@@ -502,9 +520,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 	public String renameItem(String connectionToken, int item, ITEM_TYPE type, String newName) 
 			throws IllegalArgumentException, DatabaseConnectionException, PostgreSQLException {
 		ConnectionManager connMgr = new ConnectionManager();
-		
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		HttpServletRequest request = this.getThreadLocalRequest();  
+
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		try {
 		switch(type) {
@@ -529,9 +548,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public String truncate(String connectionToken, int item, ITEM_TYPE type) throws DatabaseConnectionException, PostgreSQLException {
 		ConnectionManager connMgr = new ConnectionManager();
-		
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		HttpServletRequest request = this.getThreadLocalRequest();  
+
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		Tables tables = new Tables(connMgr.getConnection(connectionToken,clientIP, userAgent));
 	
@@ -549,9 +569,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 			throws DatabaseConnectionException, PostgreSQLException {
 
 		ConnectionManager connMgr = new ConnectionManager();
+		HttpServletRequest request = this.getThreadLocalRequest();  
 
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		Tables tables = new Tables(connMgr.getConnection(connectionToken,clientIP, userAgent));
 
@@ -567,9 +588,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 			String viewName, String definition, String comment, boolean isMaterialized) throws DatabaseConnectionException {
 
 		ConnectionManager connMgr = new ConnectionManager();
+		HttpServletRequest request = this.getThreadLocalRequest();  
 
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		Views views= new Views(connMgr.getConnection(connectionToken,clientIP, userAgent));
 
@@ -581,9 +603,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 	public String createColumn(String connectionToken, int item, 
 			String columnName, String datatype, String comment, boolean not_null, String defaultval) throws DatabaseConnectionException, PostgreSQLException {
 		ConnectionManager connMgr = new ConnectionManager();
+		HttpServletRequest request = this.getThreadLocalRequest();  
 
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		Columns columns;
 
@@ -601,9 +624,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 			String indexName, INDEX_TYPE indexType, 
 			boolean isUnique, boolean isConcurrently, ArrayList<String> columnList) throws DatabaseConnectionException, PostgreSQLException {
 		ConnectionManager connMgr = new ConnectionManager();
+		HttpServletRequest request = this.getThreadLocalRequest();  
 
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		Indexes indexes = new Indexes(connMgr.getConnection(connectionToken, clientIP, userAgent));
 
@@ -621,9 +645,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 			throws DatabaseConnectionException, PostgreSQLException {
 
 		ConnectionManager connMgr = new ConnectionManager();
+		HttpServletRequest request = this.getThreadLocalRequest();  
 
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		Sequences sequences = new Sequences(connMgr.getConnection(connectionToken,
 				clientIP, userAgent));
@@ -639,9 +664,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public String renameSchema(String connectionToken, String oldSchema, String schema) throws DatabaseConnectionException {
 		ConnectionManager connMgr = new ConnectionManager();
-		
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		HttpServletRequest request = this.getThreadLocalRequest();  
+
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		Schemas schemas;
 
@@ -653,9 +679,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public String dropSchema(String connectionToken, String schemaName, boolean cascade) throws DatabaseConnectionException {
 		ConnectionManager connMgr = new ConnectionManager();
-		
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		HttpServletRequest request = this.getThreadLocalRequest();  
+
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		Schemas schemas;
 
@@ -667,9 +694,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public String createSchema(String connectionToken, String schemaName) throws DatabaseConnectionException {
 		ConnectionManager connMgr = new ConnectionManager();
-		
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		HttpServletRequest request = this.getThreadLocalRequest();  
+
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		Schemas schemas;
 
@@ -680,11 +708,11 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public String getExplainResult(String connectionToken, String query) throws IllegalArgumentException, DatabaseConnectionException {
-
 		ConnectionManager connMgr = new ConnectionManager();
-		
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		HttpServletRequest request = this.getThreadLocalRequest();  
+
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 		
 		ItemData id;
 
@@ -698,9 +726,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 			String constraintName, boolean isPrimaryKey,
 			ArrayList<String> columnList) throws DatabaseConnectionException, PostgreSQLException {
 		ConnectionManager connMgr = new ConnectionManager();
+		HttpServletRequest request = this.getThreadLocalRequest();  
 
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		Constraints constraints;
 
@@ -719,9 +748,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 	public String createCheckConstraint(String connectionToken, int item, String constraintName, String definition)
 			throws DatabaseConnectionException, PostgreSQLException {
 		ConnectionManager connMgr = new ConnectionManager();
+		HttpServletRequest request = this.getThreadLocalRequest();  
 
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		Constraints constraints;
 
@@ -741,9 +771,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 			ArrayList<String> columnList, String referenceTable,
 			ArrayList<String> referenceList) throws DatabaseConnectionException, PostgreSQLException {
 		ConnectionManager connMgr = new ConnectionManager();
+		HttpServletRequest request = this.getThreadLocalRequest();  
 
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		Constraints constraints;
 
@@ -764,9 +795,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 			ArrayList<String> paramList, String definition)
 			throws DatabaseConnectionException, PostgreSQLException {
 		ConnectionManager connMgr = new ConnectionManager();
+		HttpServletRequest request = this.getThreadLocalRequest();  
 
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		Functions funcs;
 
@@ -785,9 +817,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 			String typeName, TYPE_FORM form, String baseType, String definition,
 			ArrayList<String> attributeList) throws DatabaseConnectionException {
 		ConnectionManager connMgr = new ConnectionManager();
+		HttpServletRequest request = this.getThreadLocalRequest();  
 
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		Types types;
 
@@ -805,9 +838,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 			throws IllegalArgumentException, DatabaseConnectionException {
 
 		ConnectionManager connMgr = new ConnectionManager();
-		
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		HttpServletRequest request = this.getThreadLocalRequest();  
+
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		ForeignTables tables;
 
@@ -821,9 +855,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 			String ruleName, String event, String ruleType, String definition)
 			throws DatabaseConnectionException, PostgreSQLException {
 		ConnectionManager connMgr = new ConnectionManager();
+		HttpServletRequest request = this.getThreadLocalRequest();  
 
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		Rules rules;
 
@@ -844,9 +879,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 			String event, String triggerType, String forEach,
 			String function) throws DatabaseConnectionException, PostgreSQLException {
 		ConnectionManager connMgr = new ConnectionManager();
+		HttpServletRequest request = this.getThreadLocalRequest();  
 
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		Triggers triggers = new Triggers(connMgr.getConnection(connectionToken,
 				clientIP, userAgent));
@@ -864,9 +900,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 			String privilege, String grantee, boolean cascade)
 			throws DatabaseConnectionException, PostgreSQLException {
 		ConnectionManager connMgr = new ConnectionManager();
+		HttpServletRequest request = this.getThreadLocalRequest();  
 
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		Privileges priv = new Privileges(connMgr.getConnection(connectionToken,
 				clientIP, userAgent));
@@ -882,9 +919,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 			ArrayList<String> privileges, String grantee)
 			throws DatabaseConnectionException, PostgreSQLException {
 		ConnectionManager connMgr = new ConnectionManager();
+		HttpServletRequest request = this.getThreadLocalRequest();  
 
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		Privileges priv = new Privileges(connMgr.getConnection(connectionToken,
 				clientIP, userAgent));
@@ -903,9 +941,10 @@ public class PgStudioServiceImpl extends RemoteServiceServlet implements
 			String schema, String viewName) throws DatabaseConnectionException {
 
 		ConnectionManager connMgr = new ConnectionManager();
+		HttpServletRequest request = this.getThreadLocalRequest();  
 
-		String clientIP = this.getThreadLocalRequest().getRemoteAddr();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		String clientIP = ConnectionInfo.remoteAddr(request);
+		String userAgent = request.getHeader("User-Agent");
 
 		Views views = new Views(connMgr.getConnection(connectionToken,
 				clientIP, userAgent));

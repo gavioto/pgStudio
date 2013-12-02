@@ -21,7 +21,10 @@
     <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
       
     <% 
-        String dbToken = (String) session.getAttribute("dbToken");
+        String dbToken = null;
+        if(session != null) {
+            dbToken = (String) session.getAttribute("dbToken");
+        }
     
         if(dbToken==null) { 
         	dbToken="";
