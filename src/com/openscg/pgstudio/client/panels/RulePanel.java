@@ -70,7 +70,6 @@ public class RulePanel extends Composite implements DetailsPanel {
     private final SingleSelectionModel<RuleInfo> selectionModel = 
         	new SingleSelectionModel<RuleInfo>(RuleInfo.KEY_PROVIDER);
 
-	private String TEXT_WIDTH = "680px";
 	private String MAIN_HEIGHT = "250px";
 	
 	public static int ROWS_PER_PAGE = 5;
@@ -172,9 +171,10 @@ public class RulePanel extends Composite implements DetailsPanel {
 
 	private Widget getMainPanel() {
 		SimplePanel panel = new SimplePanel();
+		panel.setWidth("100%");
+		panel.setHeight("100%");
 		
 		dataGrid = new DataGrid<RuleInfo>(MAX_RULES, RuleInfo.KEY_PROVIDER);
-		dataGrid.setWidth(PgStudio.RIGHT_WIDTH);
 		dataGrid.setHeight(MAIN_HEIGHT);
 		
 		Column<RuleInfo, String> columnName = addColumn(new TextCell(), "Rule Name", new GetValue<String>() {
@@ -253,17 +253,18 @@ public class RulePanel extends Composite implements DetailsPanel {
 
 	private Widget getDetailSection() {
 		HorizontalPanel panel = new HorizontalPanel();
-		panel.setWidth(PgStudio.RIGHT_WIDTH);
+		panel.setWidth("100%");
 		panel.setStyleName("studio-Bottom-Panel");
 				
 		VerticalPanel ruleDefPanel = new VerticalPanel();
+		ruleDefPanel.setWidth("95%");
 
 		Label lbl = new Label();
 		lbl.setText("Rule Definition");
 		lbl.setStyleName("studio-Label-Small");
 
 		ruleDef = new TextArea();
-		ruleDef.setWidth(TEXT_WIDTH);
+		ruleDef.setWidth("100%");
 		ruleDef.setVisibleLines(5);
 		ruleDef.setReadOnly(true);
 		

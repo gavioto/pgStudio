@@ -81,6 +81,8 @@ public class TypesPanel extends Composite implements MenuPanel {
 		this.main = main;
 		
 		VerticalPanel panel = new VerticalPanel();
+		panel.setWidth("95%");
+
 		panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 
 		panel.add(getButtonBar());
@@ -164,7 +166,6 @@ public class TypesPanel extends Composite implements MenuPanel {
 
 	private Widget getTypeList() {
 		dataGrid = new DataGrid<TypeInfo>(PgStudio.MAX_PANEL_ITEMS, TypeInfo.KEY_PROVIDER);
-		dataGrid.setWidth(PgStudio.LEFT_WIDTH);
 		dataGrid.setHeight(PgStudio.LEFT_PANEL_HEIGHT);
 
 	

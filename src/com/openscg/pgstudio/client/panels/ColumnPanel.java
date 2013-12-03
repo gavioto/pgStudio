@@ -232,9 +232,10 @@ public class ColumnPanel extends Composite implements DetailsPanel {
 
 	private Widget getMainPanel() {
 		SimplePanel panel = new SimplePanel();
+		panel.setWidth("100%");
+		panel.setHeight("100%");
 		
 		dataGrid = new DataGrid<ColumnInfo>(MAX_COLUMNS, ColumnInfo.KEY_PROVIDER);
-		dataGrid.setWidth(PgStudio.RIGHT_WIDTH);
 		dataGrid.setHeight(MAIN_HEIGHT);
 		
 		Column<ColumnInfo, String> columnName = addColumn(new TextCell(), "Column Name", new GetValue<String>() {
@@ -336,17 +337,18 @@ public class ColumnPanel extends Composite implements DetailsPanel {
 
 	private Widget getCommentSection() {
 		HorizontalPanel panel = new HorizontalPanel();
-		panel.setWidth(PgStudio.RIGHT_WIDTH);
+		panel.setWidth("100%");
 		panel.setStyleName("studio-Bottom-Panel");
 		
 		VerticalPanel left = new VerticalPanel();
+		left.setWidth("95%");
 		
 		commentLbl = new Label();		
 		commentLbl.setText("Comment");
 		commentLbl.setStyleName("studio-Label-Small");
 
 		itemComment = new TextArea();
-		itemComment.setWidth(TEXT_WIDTH);
+		itemComment.setWidth("100%");
 		itemComment.setVisibleLines(3);
 		itemComment.setReadOnly(true);
 				
@@ -354,13 +356,14 @@ public class ColumnPanel extends Composite implements DetailsPanel {
 		left.add(itemComment);
 
 		VerticalPanel right = new VerticalPanel();
+		right.setWidth("95%");
 
 		Label rightLbl = new Label();
 		rightLbl.setText("Column comment");
 		rightLbl.setStyleName("studio-Label-Small");
 
 		colComment = new TextArea();
-		colComment.setWidth(TEXT_WIDTH);
+		colComment.setWidth("100%");
 		colComment.setVisibleLines(3);
 		colComment.setReadOnly(true);
 		

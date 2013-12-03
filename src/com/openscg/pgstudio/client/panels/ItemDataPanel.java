@@ -59,8 +59,6 @@ public class ItemDataPanel extends Composite implements DetailsPanel {
 	
 	private static int PIX_PER_CHAR = 10;
 	private static String MAIN_HEIGHT = "300px";
-	private static String MAIN_WIDTH = "700px";
-	private static int MAIN_WIDTH_VAL = 700;
 	private static int PAGE_SIZE = 14;
 	
 	private int activeColCount = 0;
@@ -194,11 +192,11 @@ public class ItemDataPanel extends Composite implements DetailsPanel {
 	
 	private Widget getMainPanel() {
 		VerticalPanel panel = new VerticalPanel();
-		panel.setWidth(PgStudio.RIGHT_WIDTH);
+		panel.setWidth("100%");
 		panel.setHeight(MAIN_HEIGHT);
 		
 		ScrollPanel scroll = new ScrollPanel();
-		scroll.setWidth(PgStudio.RIGHT_WIDTH);
+		scroll.setWidth("100%");
 		scroll.setHeight(MAIN_HEIGHT);
 		
 		dataGrid = new SimpleGrid();
@@ -252,15 +250,7 @@ public class ItemDataPanel extends Composite implements DetailsPanel {
 	}-*/;
 
 	private int getColumnWidth(List<Integer> columnWidths, int index) {
-		int freespace = MAIN_WIDTH_VAL;
-		
-		for (int i = 0; i < columnWidths.size(); i++) {
-			freespace = freespace - (columnWidths.get(i) * PIX_PER_CHAR);
-		}
-		
 		int pad = 15;
-		if (freespace > 0)
-			pad = freespace / columnWidths.size();
 		
 		return (columnWidths.get(index) * PIX_PER_CHAR) + pad;
 	}

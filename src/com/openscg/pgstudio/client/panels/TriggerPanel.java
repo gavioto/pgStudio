@@ -71,7 +71,6 @@ public class TriggerPanel extends Composite implements DetailsPanel {
     private final SingleSelectionModel<TriggerInfo> selectionModel = 
         	new SingleSelectionModel<TriggerInfo>(TriggerInfo.KEY_PROVIDER);
 
-	private String TEXT_WIDTH = "680px";
 	private String MAIN_HEIGHT = "250px";
 	
 	public static int ROWS_PER_PAGE = 5;
@@ -198,9 +197,10 @@ public class TriggerPanel extends Composite implements DetailsPanel {
 
 	private Widget getMainPanel() {
 		SimplePanel panel = new SimplePanel();
-		
+		panel.setWidth("100%");
+		panel.setHeight("100%");
+
 		dataGrid = new DataGrid<TriggerInfo>(MAX_TRIGGERS, TriggerInfo.KEY_PROVIDER);
-		dataGrid.setWidth(PgStudio.RIGHT_WIDTH);
 		dataGrid.setHeight(MAIN_HEIGHT);
 		
 		Column<TriggerInfo, String> columnName = addColumn(new TextCell(), "Trigger Name", new GetValue<String>() {
@@ -271,17 +271,18 @@ public class TriggerPanel extends Composite implements DetailsPanel {
 
 	private Widget getDetailSection() {
 		HorizontalPanel panel = new HorizontalPanel();
-		panel.setWidth(PgStudio.RIGHT_WIDTH);
+		panel.setWidth("100%");
 		panel.setStyleName("studio-Bottom-Panel");
 				
 		VerticalPanel triggerDefPanel = new VerticalPanel();
+		triggerDefPanel.setWidth("95%");
 
 		Label lbl = new Label();
 		lbl.setText("Trigger Definition");
 		lbl.setStyleName("studio-Label-Small");
 
 		triggerDef = new TextArea();
-		triggerDef.setWidth(TEXT_WIDTH);
+		triggerDef.setWidth("100%");
 		triggerDef.setVisibleLines(5);
 		triggerDef.setReadOnly(true);
 		

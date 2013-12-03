@@ -162,9 +162,11 @@ public class SecurityPanel extends Composite implements DetailsPanel {
 
 	private Widget getMainPanel() {
 		SimplePanel panel = new SimplePanel();
+		panel.setWidth("100%");
+		panel.setHeight("100%");
 		
 		dataGrid = new DataGrid<PrivilegeInfo>(MAX_PRIVS, PrivilegeInfo.KEY_PROVIDER);
-		dataGrid.setWidth(PgStudio.RIGHT_WIDTH);
+		dataGrid.setWidth("100%");
 		dataGrid.setHeight(MAIN_HEIGHT);
 
 		Column<PrivilegeInfo, ImageResource> icon = addColumn(new ImageResourceCell(), "", new GetValue<ImageResource>() {

@@ -121,8 +121,8 @@ public class DetailsTabPanel {
 		ruleWidget = rulePanel.asWidget();
 		securityWidget = secPanel.asWidget();
 
-		panel.setHeight(PgStudio.RIGHT_HEIGHT);
-		panel.setWidth(PgStudio.RIGHT_WIDTH);
+		panel.setHeight("100%");
+		panel.setWidth("100%");
 		panel.setStyleName("studio-DecoratedTabBar");
 		
 		panel.add(columnPanel, columnTabWidget);

@@ -74,7 +74,6 @@ public class ConstraintPanel extends Composite implements DetailsPanel {
     private final SingleSelectionModel<ConstraintInfo> selectionModel = 
         	new SingleSelectionModel<ConstraintInfo>(ConstraintInfo.KEY_PROVIDER);
 
-	private String TEXT_WIDTH = "680px";
 	private String MAIN_HEIGHT = "250px";
 	
 	public static int ROWS_PER_PAGE = 5;
@@ -197,11 +196,11 @@ public class ConstraintPanel extends Composite implements DetailsPanel {
 
 	private Widget getMainPanel() {
 		SimplePanel panel = new SimplePanel();
-		
+		panel.setWidth("100%");
+		panel.setHeight("100%");
+				
 		dataGrid = new DataGrid<ConstraintInfo>(MAX_INDEXES, ConstraintInfo.KEY_PROVIDER);
-		dataGrid.setWidth(PgStudio.RIGHT_WIDTH);
 		dataGrid.setHeight(MAIN_HEIGHT);
-
 
 		Column<ConstraintInfo, ImageResource> typeImg = addColumn(new ImageResourceCell(), "", new GetValue<ImageResource>() {
 	        public ImageResource getValue(ConstraintInfo c) {
@@ -314,17 +313,18 @@ public class ConstraintPanel extends Composite implements DetailsPanel {
 
 	private Widget getDetailSection() {
 		HorizontalPanel panel = new HorizontalPanel();
-		panel.setWidth(PgStudio.RIGHT_WIDTH);
+		panel.setWidth("100%");
 		panel.setStyleName("studio-Bottom-Panel");
 		
 		VerticalPanel right = new VerticalPanel();
+		right.setWidth("95%");
 
 		Label rightLbl = new Label();
 		rightLbl.setText("Constraint Definition");
 		rightLbl.setStyleName("studio-Label-Small");
 
 		constDef = new TextArea();
-		constDef.setWidth(TEXT_WIDTH);
+		constDef.setWidth("100%");
 		constDef.setVisibleLines(5);
 		constDef.setReadOnly(true);
 		

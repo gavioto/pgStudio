@@ -111,6 +111,7 @@ public class ForeignTablesPanel extends Composite implements MenuPanel {
 		this.main = main;
 		
 		VerticalPanel panel = new VerticalPanel();
+		panel.setWidth("95%");
 		panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 
 		panel.add(getButtonBar());
@@ -251,7 +252,6 @@ public class ForeignTablesPanel extends Composite implements MenuPanel {
 
 	private Widget getTableList() {
 		dataGrid = new DataGrid<ForeignTableInfo>(PgStudio.MAX_PANEL_ITEMS, ForeignTableInfo.KEY_PROVIDER);
-		dataGrid.setWidth(PgStudio.LEFT_WIDTH);
 		dataGrid.setHeight(PgStudio.LEFT_PANEL_HEIGHT);
 		dataGrid.setLoadingIndicator(new Image(PgStudio.Images.spinner()));
 

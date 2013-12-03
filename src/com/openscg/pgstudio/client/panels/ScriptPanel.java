@@ -116,7 +116,7 @@ public class ScriptPanel extends Composite implements DetailsPanel {
 	private Widget getMainPanel() {
 		codePanel = new SimplePanel();
 				
-		codeArea.setWidth(PgStudio.RIGHT_WIDTH);
+		codeArea.setWidth("95%");
 		codeArea.setHeight(PgStudio.RIGHT_PANEL_HEIGHT);
 
 		codeArea.setReadOnly(true);
@@ -139,7 +139,7 @@ public class ScriptPanel extends Composite implements DetailsPanel {
 		config.setParserFile(parserFile);
 		config.setStylesheet(styleSheet);
 		
-		config.setWidth(700, Unit.PX);
+		config.setWidth(95, Unit.PCT);
 		config.setHeight(385, Unit.PX);
 		
 		return config;

@@ -76,7 +76,6 @@ public class IndexPanel extends Composite implements DetailsPanel {
     private final SingleSelectionModel<IndexInfo> selectionModel = 
         	new SingleSelectionModel<IndexInfo>(IndexInfo.KEY_PROVIDER);
 
-	private String TEXT_WIDTH = "300px";
 	private String MAIN_HEIGHT = "250px";
 	
 	public static int ROWS_PER_PAGE = 5;
@@ -204,9 +203,11 @@ public class IndexPanel extends Composite implements DetailsPanel {
 
 	private Widget getMainPanel() {
 		SimplePanel panel = new SimplePanel();
+		panel.setWidth("100%");
+		panel.setHeight("100%");
+
 		
 		dataGrid = new DataGrid<IndexInfo>(MAX_INDEXES, IndexInfo.KEY_PROVIDER);
-		dataGrid.setWidth(PgStudio.RIGHT_WIDTH);
 		dataGrid.setHeight(MAIN_HEIGHT);
 		
 		Column<IndexInfo, String> columnName = addColumn(new TextCell(), "Index Name", new GetValue<String>() {
@@ -296,17 +297,20 @@ public class IndexPanel extends Composite implements DetailsPanel {
 
 	private Widget getDetailSection() {
 		HorizontalPanel panel = new HorizontalPanel();
-		panel.setWidth(PgStudio.RIGHT_WIDTH);
+		panel.setWidth("100%");
+		panel.setHeight("100%");
+
 		panel.setStyleName("studio-Bottom-Panel");
 		
 		VerticalPanel left = new VerticalPanel();
+		left.setWidth("95%");
 		
 		Label leftLbl = new Label();
 		leftLbl.setText("Index Statistics");
 		leftLbl.setStyleName("studio-Label-Small");
 
 		dataDetailGrid = new DataGrid<StatsInfo>(8, StatsInfo.KEY_PROVIDER);
-		dataDetailGrid.setWidth(TEXT_WIDTH);
+		dataDetailGrid.setWidth("100%");
 		dataDetailGrid.setHeight("100px");
 		
 		Column<StatsInfo, String> Name =
@@ -335,13 +339,14 @@ public class IndexPanel extends Composite implements DetailsPanel {
 		left.add(dataDetailGrid);
 
 		VerticalPanel right = new VerticalPanel();
+		right.setWidth("95%");
 
 		Label rightLbl = new Label();
 		rightLbl.setText("Index Definition");
 		rightLbl.setStyleName("studio-Label-Small");
 
 		indexDef = new TextArea();
-		indexDef.setWidth(TEXT_WIDTH);
+		indexDef.setWidth("100%");
 		indexDef.setVisibleLines(5);
 		indexDef.setReadOnly(true);
 		
@@ -351,7 +356,7 @@ public class IndexPanel extends Composite implements DetailsPanel {
 		panel.add(left);
 		panel.add(PgStudio.filler);
 		panel.add(right);
-				
+						
 		return panel.asWidget();
 	}
 

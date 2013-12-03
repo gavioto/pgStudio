@@ -85,11 +85,10 @@ public class StatsPanel extends Composite implements DetailsPanel {
 	
 	private Widget getMainPanel() {
 		SimplePanel panel = new SimplePanel();
-		panel.setWidth(PgStudio.RIGHT_WIDTH);
+		panel.setWidth("100%");
 		panel.setHeight(MAIN_HEIGHT);
 		
 		dataGrid = new DataGrid<StatsInfo>(25, StatsInfo.KEY_PROVIDER);
-		dataGrid.setWidth(PgStudio.RIGHT_WIDTH);
 		dataGrid.setHeight(MAIN_HEIGHT);
 		
 		Column<StatsInfo, String> name = addNameColumn(new TextCell(), "Name", new GetValue<String>() {

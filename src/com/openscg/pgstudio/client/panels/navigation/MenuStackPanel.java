@@ -74,9 +74,8 @@ public class MenuStackPanel {
 	}
 	
 	public Widget asWidget() {
-		
-		panel.setWidth(PgStudio.LEFT_WIDTH);
-		
+		panel.setWidth("95%");
+
 	    panel.add(tables, TextFormat.getHeaderString("Tables", Images.tables()), true);
 	    panel.add(views, TextFormat.getHeaderString("Views", Images.views()), true);
 	    

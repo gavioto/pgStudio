@@ -82,6 +82,8 @@ public class SequencesPanel extends Composite implements MenuPanel {
 		this.main = main;
 		
 		VerticalPanel panel = new VerticalPanel();
+		panel.setWidth("95%");
+
 		panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 
 		panel.add(getButtonBar());
@@ -166,7 +168,6 @@ public class SequencesPanel extends Composite implements MenuPanel {
 
 	private Widget getSequenceList() {
 		dataGrid = new DataGrid<SequenceInfo>(PgStudio.MAX_PANEL_ITEMS, SequenceInfo.KEY_PROVIDER);
-		dataGrid.setWidth(PgStudio.LEFT_WIDTH);
 		dataGrid.setHeight(PgStudio.LEFT_PANEL_HEIGHT);
 
 	

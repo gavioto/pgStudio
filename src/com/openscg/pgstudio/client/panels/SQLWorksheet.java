@@ -90,8 +90,8 @@ public class SQLWorksheet extends Composite  {
 	public SQLWorksheet() {
 		
 		VerticalPanel mainPanel = new VerticalPanel();
-		mainPanel.setWidth("1200px");
-		mainPanel.setHeight("600px");
+		mainPanel.setWidth("95%");
+		mainPanel.setHeight("95%");
 
 		mainPanel.add(getHeaderPanel());
 		mainPanel.add(getSQLPanel());

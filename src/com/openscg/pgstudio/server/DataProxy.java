@@ -40,6 +40,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 
+import com.openscg.pgstudio.server.util.ConnectionInfo;
 import com.openscg.pgstudio.server.util.ConnectionManager;
 
 public class DataProxy extends HttpServlet {
@@ -56,7 +57,7 @@ public class DataProxy extends HttpServlet {
 
     private void handleRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
-            String clientIP = req.getRemoteAddr();
+    		String clientIP = ConnectionInfo.remoteAddr(req);
             String userAgent = req.getHeader("User-Agent");
             String token = "";
 

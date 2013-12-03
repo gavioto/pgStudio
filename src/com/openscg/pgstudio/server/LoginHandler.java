@@ -27,6 +27,7 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import com.openscg.pgstudio.server.util.ConnectionInfo;
 import com.openscg.pgstudio.server.util.ConnectionManager;
 import com.openscg.pgstudio.shared.DatabaseConnectionException;
 
@@ -44,7 +45,7 @@ public void doPost(HttpServletRequest req, HttpServletResponse res)
     String username = req.getParameter("username");
     String passwd = req.getParameter("password");
 
-    String clientIP = req.getRemoteAddr();
+	String clientIP = ConnectionInfo.remoteAddr(req);
     String userAgent = req.getHeader("User-Agent");
     String queryString = req.getQueryString();
     

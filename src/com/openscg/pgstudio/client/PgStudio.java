@@ -85,10 +85,7 @@ public class PgStudio implements EntryPoint {
 	
 	public static final Resources Images =  GWT.create(Resources.class);
 	
-	public static final String MAIN_WIDTH = "960px";
-	public static final String LEFT_WIDTH = "200px";
 	public static final String LEFT_PANEL_HEIGHT = "237px";
-	public static final String RIGHT_WIDTH = "700px";
 	public static final String RIGHT_HEIGHT = "500px";
 	public static final String RIGHT_PANEL_HEIGHT = "385px";
 	
@@ -183,25 +180,25 @@ public class PgStudio implements EntryPoint {
 
 	private Widget getMainPanel() {
 		VerticalPanel fullPanel = new VerticalPanel();
-		fullPanel.setWidth(MAIN_WIDTH);
         fullPanel.setStyleName("full-panel-container");
 		
 		fullPanel.add(getHeaderWidget());
 		
         HorizontalPanel mainPanel = new HorizontalPanel();
-        mainPanel.setWidth(MAIN_WIDTH);
         mainPanel.setStyleName("main-panel-container");
 
 		VerticalPanel leftPanel = new VerticalPanel();
+		leftPanel.setWidth("100%");
 		leftPanel.add(getSchemaWidget());
 		
 		Image separator = new Image(Images.HorizontalSeparatorLine());
-		separator.setWidth(LEFT_WIDTH);
+		separator.setWidth("95%");
 		leftPanel.add(separator);
 		
 		leftPanel.add(msp.asWidget());
 		
 		VerticalPanel rightPanel = new VerticalPanel();
+		rightPanel.setWidth("100%");
 		HorizontalPanel rightInfoPanel = new HorizontalPanel();
 		
 		detailsInfo.setText("");
@@ -214,6 +211,9 @@ public class PgStudio implements EntryPoint {
 		
 		mainPanel.add(leftPanel);
 		mainPanel.add(rightPanel);
+		
+		mainPanel.setCellWidth(leftPanel, "20%");
+		mainPanel.setCellWidth(rightPanel, "80%");
 		
 		fullPanel.add(mainPanel);
 		
@@ -317,7 +317,7 @@ public class PgStudio implements EntryPoint {
 
 		    	  sqlDialog.setWidget(sql.asWidget());
 		    	  sqlDialog.setGlassEnabled(true);
-		    	  sqlDialog.setPopupPosition(0, 0);
+		    	  sqlDialog.setPopupPosition(20, 20);
 		    	  sqlDialog.setText("SQL Worksheet");
 		    	  sqlDialog.show();
 

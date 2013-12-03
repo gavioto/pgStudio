@@ -89,6 +89,8 @@ public class ViewsPanel extends Composite implements MenuPanel {
 		this.main = main;
 		
 		VerticalPanel panel = new VerticalPanel();
+		panel.setWidth("95%");
+
 		panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 
 		panel.add(getButtonBar());
@@ -237,7 +239,6 @@ public class ViewsPanel extends Composite implements MenuPanel {
 
 	private Widget getViewList() {
 		dataGrid = new DataGrid<ViewInfo>(PgStudio.MAX_PANEL_ITEMS, ViewInfo.KEY_PROVIDER);
-		dataGrid.setWidth(PgStudio.LEFT_WIDTH);
 		dataGrid.setHeight(PgStudio.LEFT_PANEL_HEIGHT);
 
 	
