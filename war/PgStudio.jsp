@@ -115,11 +115,6 @@
     <script type="text/javascript" language="javascript" src="com.openscg.pgstudio.PgStudio/com.openscg.pgstudio.PgStudio.nocache.js"></script>
   </head>
 
-  <!--                                           -->
-  <!-- The body can have arbitrary html, or      -->
-  <!-- you can leave the body empty if you want  -->
-  <!-- to create a completely dynamic UI.        -->
-  <!--                                           -->
   <body class="studioBody">
 
     <!-- OPTIONAL: include this if you want history support -->
@@ -154,6 +149,7 @@
 
     </div>
     </div>
+    <span id="version">PostgreSQL Studio v1.1</span>
 
 	<% } %>
 	

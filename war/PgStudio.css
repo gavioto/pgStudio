@@ -72,6 +72,15 @@ h1 {
   height: 100%;
 }
 
+span#version {
+    color: #fff;
+    font-family: Arial;
+    font-size: 8pt;
+    margin-right: 50px;
+    margin-top: -40px;
+    float: right;
+}
+
 .studio-Label {
 	color: #97A1AE;
     font-family: arial, sans-serif;
