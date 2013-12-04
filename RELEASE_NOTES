@@ -1,0 +1,28 @@
+PostgreSQL Studio History
+-------------------------
+
+Version 1.1
+-----------
+
+Released: 4th December 2013 
+
+Features
+* Changed the logo to the new PostgreSQL Studio logo
+* Changed the widths of the panels to be relative to allow them to be resized as the browser is expanded 
+* Displayed the version number of PostgreSQL Studio
+* Added a panel to display security information for foreign tables  
+* Added a panel to display the DDL to create a foreign table
+
+Bugs
+* Fixed exception preventing Internet Explorer from starting PostgreSQL Studio
+* Fixed word wrapping of long database names
+* Removed absolute paths so PostgreSQL Studio can be relocated 
+* Reorganized the web.xml file to be valid for Glassfish 
+
+Version 1.0 
+-----------
+
+Released: 2nd October 2013 
+
+* Initial release 
+
