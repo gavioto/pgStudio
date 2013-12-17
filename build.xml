@@ -4,7 +4,7 @@
     <property name="gwt.module.name" value="com.openscg.pgstudio.PgStudio"/>
     <property name="server.resources.name" value="server_resources"/>
     <property name="file.name" value="pgstudio"/>
-    <property name="file.version" value="1.1"/>
+    <property name="file.version" value="1.2"/>
     <property name="jar.name" value="${file.name}.jar"/>
     <property name="war.name" value="${file.name}.war"/>
     <property name="src.dir" location="src"/>
