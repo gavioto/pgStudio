@@ -29,6 +29,8 @@ import com.google.gwt.core.client.JsArray;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.TextAreaElement;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -37,8 +39,11 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DecoratedTabPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextArea;
@@ -86,7 +91,12 @@ public class SQLWorksheet extends Composite  {
 	private Widget explainTabWidget = new HTML(TextFormat.getHeaderString("Explain", PgStudio.Images.column()));
 
 	public static boolean closedByUser = false;
+	
+	private int limit = 100;
 
+	private String LIMIT_STR = "Limit";
+	private String NO_LIMIT_STR = "No Limit";
+	
 	public SQLWorksheet() {
 		
 		VerticalPanel mainPanel = new VerticalPanel();
@@ -119,11 +129,16 @@ public class SQLWorksheet extends Composite  {
 	private Widget getHeaderPanel() {
 		HorizontalPanel panel = new HorizontalPanel();
 		panel.setWidth("100%");
-		panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_JUSTIFY);
+		panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		
 		Widget buttons = getButtonBar();
+		Widget limits = getLimitBar();
 		
 		panel.add(buttons);
+		panel.add(limits);
+		
+		panel.setCellHorizontalAlignment(buttons, HasHorizontalAlignment.ALIGN_LEFT);
+		panel.setCellHorizontalAlignment(limits, HasHorizontalAlignment.ALIGN_RIGHT);
 		
 		return panel.asWidget();
 	}
@@ -146,6 +161,42 @@ public class SQLWorksheet extends Composite  {
 		return bar.asWidget();
 	}
 		
+	private Widget getLimitBar() {
+		HorizontalPanel bar = new HorizontalPanel();
+
+		Label lbl = new Label();
+		lbl.setText(LIMIT_STR);
+		lbl.setStyleName("studio-Label-Small");
+
+		final ListBox limitBox = new ListBox();
+		limitBox.setStyleName("roundList");
+		limitBox.addItem("100");
+		limitBox.addItem("500");
+		limitBox.addItem("1000");
+		limitBox.addItem(NO_LIMIT_STR);
+		
+		limitBox.setSelectedIndex(0);
+		
+		limitBox.addChangeHandler(new ChangeHandler() {
+			@Override
+			public void onChange(ChangeEvent arg0) {
+				if (limitBox.getItemText(limitBox.getSelectedIndex()).equals(NO_LIMIT_STR)) {
+					limit = -1;
+				} else {
+					limit = Integer.parseInt(limitBox.getItemText(limitBox.getSelectedIndex()));
+				}
+			}
+		});
+		
+		bar.add(lbl);
+		bar.add(limitBox);
+		
+		bar.setCellVerticalAlignment(lbl, HasVerticalAlignment.ALIGN_MIDDLE);
+		bar.setCellVerticalAlignment(limitBox, HasVerticalAlignment.ALIGN_MIDDLE);
+		
+		return bar.asWidget();
+	}
+	
 	private PushButton getRefreshButton() {
 		PushButton button = new PushButton(new Image(PgStudio.Images.refresh()));
 		button.setTitle("Refresh");
@@ -207,7 +258,8 @@ public class SQLWorksheet extends Composite  {
 		    							if (res.get(0).getQueryType().equals("SELECT")) {
 				    						tabPanel.selectTab(0);
 				    						if(!selectQuery.toLowerCase().contains("limit")){
-				    							selectQuery = selectQuery + " LIMIT 200";	
+				    							if (limit > 0)
+				    								selectQuery = selectQuery + " LIMIT " + limit;	
 				    						}
 				    						setupGrid(res.get(0).getMetaData(), selectQuery);
 				    					} else {
@@ -479,8 +531,6 @@ public class SQLWorksheet extends Composite  {
 			
 			public void onSuccess(String result) {
 				
-				String[] resultsFields = result.split(" ");
-
 				//Constructor passing in result as json String and array of column names.
 				try{
 					ExplainGridData data = new ExplainGridData(result,columnsArray);

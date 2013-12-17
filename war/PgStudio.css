@@ -91,6 +91,7 @@ span#version {
 	color: #97A1AE;
     font-family: arial, sans-serif;
     font-size: 15px;
+    padding-right: 5px;
 }
 
 .studio-Bottom-Panel {
@@ -776,6 +777,20 @@ span#version {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
 	filter: alpha(opacity=100);
 	opacity: 1;
+}
+
+.roundList {
+    -webkit-border-radius:10px;
+    border-radius:10px;
+
+}
+
+.roundList .x-list-item:first-child {
+   border-top: 0;
+}
+
+.roundList .x-list-item:last-child {
+   border-bottom: 0;
 }
 
 .StudioCaption {
