@@ -23,6 +23,15 @@
  */
 package com.openscg.pgstudio.client.panels;
 
+import org.vectomatic.file.Blob;
+import org.vectomatic.file.File;
+import org.vectomatic.file.FileList;
+import org.vectomatic.file.FileReader;
+import org.vectomatic.file.FileUploadExt;
+import org.vectomatic.file.FileUtils;
+import org.vectomatic.file.events.LoadEndEvent;
+import org.vectomatic.file.events.LoadEndHandler;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
@@ -81,6 +90,8 @@ public class SQLWorksheet extends Composite  {
 	private final TextArea codeArea = new TextArea();
 	private CodeMirror cm;
 	
+	private final FileUploadExt upload = new FileUploadExt();
+	
 	private DecoratedTabPanel tabPanel;
 	private SimplePanel resultPanel;
 	private SimplePanel messagePanel;
@@ -96,6 +107,8 @@ public class SQLWorksheet extends Composite  {
 
 	private String LIMIT_STR = "Limit";
 	private String NO_LIMIT_STR = "No Limit";
+	private String INVALID_FILE_STR = "Invalid file type";
+	private String PROBLEM_READING_FILE_STR = "Problem reading file";
 	
 	public SQLWorksheet() {
 		
@@ -106,7 +119,10 @@ public class SQLWorksheet extends Composite  {
 		mainPanel.add(getHeaderPanel());
 		mainPanel.add(getSQLPanel());
 		mainPanel.add(getOutputTablePanel());
-				
+
+		mainPanel.add(upload);
+		upload.setVisible(false);
+
 		initWidget(mainPanel);
 	}
 
@@ -146,13 +162,26 @@ public class SQLWorksheet extends Composite  {
 	private Widget getButtonBar() {
 		HorizontalPanel bar = new HorizontalPanel();
 		
-		PushButton refresh = getRefreshButton();
+		PushButton save = getSaveButton();
+		PushButton open = getOpenButton();
 		PushButton stop = getTerminateButton();
 		PushButton run = getRunButton();
 		PushButton explain = getExplainButton();
 		PushButton close = getCloseButton();
 		
-		bar.add(refresh);
+		try {
+			if (FileUtils.supportsFileAPI()) {
+				bar.add(save);
+				bar.add(open);
+			}
+		} catch (Exception ex) {
+			// Chrome does not expose the DataTransfer object
+			if (ex.getMessage().contains("DataTransfer is not defined")) {
+				bar.add(save);
+				bar.add(open);
+			}
+		}
+		
 		bar.add(stop);
 		bar.add(run);
 		bar.add(explain);
@@ -197,13 +226,6 @@ public class SQLWorksheet extends Composite  {
 		return bar.asWidget();
 	}
 	
-	private PushButton getRefreshButton() {
-		PushButton button = new PushButton(new Image(PgStudio.Images.refresh()));
-		button.setTitle("Refresh");
-		
-		return button;
-	}
-
 	private PushButton getRunButton() {
 		PushButton button = new PushButton(new Image(PgStudio.Images.run()));
 		button.setTitle("Run");
@@ -275,6 +297,44 @@ public class SQLWorksheet extends Composite  {
 			}			
 		});
 		
+		return button;
+	}
+
+	private PushButton getSaveButton() {
+		PushButton button = new PushButton(new Image(PgStudio.Images.save()));
+		button.setTitle("Save");
+		
+		button.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent arg0) {
+				String url = FileUtils.createDataUrl("application/octet-stream", cm.getContent());
+				Window.open(url, "_self", null);
+			}
+			
+		});
+		
+		return button;
+	}
+
+	private PushButton getOpenButton() {
+		PushButton button = new PushButton(new Image(PgStudio.Images.fileOpen()));
+		button.setTitle("Open");
+
+		upload.addChangeHandler(new ChangeHandler() {
+			@Override
+			public void onChange(ChangeEvent arg0) {
+				processFiles(upload.getFiles());			}
+			
+		});
+		
+		button.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent arg0) {
+				upload.click();
+			}
+			
+		});
+
 		return button;
 	}
 
@@ -641,6 +701,42 @@ public class SQLWorksheet extends Composite  {
 		return type;
 	}
 
+	private void processFiles(FileList files) {
+		final FileReader reader = new FileReader();
+
+		reader.addLoadEndHandler(new LoadEndHandler() {
+			@Override
+			public void onLoadEnd(LoadEndEvent event) {
+				if (reader.getError() == null) {
+					try {
+						cm.setContent(reader.getStringResult());
+					} catch (Exception ex) {
+						Window.alert(PROBLEM_READING_FILE_STR);
+					}
+				}
+			}
+
+		});
+
+		try {
+			for (File file : files) {
+				String type = file.getType();
+
+				if (type.equals("") || type.startsWith("text/")) {
+					Blob blob = file;
+					if (file.getSize() > 0) {
+						blob = file.slice();
+					}
+					reader.readAsText(blob);
+				} else {
+					Window.alert(INVALID_FILE_STR);
+				}
+			}
+		} catch (Exception ex) {
+			Window.alert("Problem reading file");
+		}
+	}
+	
 	private static final native JsArray<QueryMetaDataResultJsObject> json2Messages(
 			String json)
 	/*-{ 

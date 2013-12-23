@@ -17,6 +17,7 @@
         <dependency org="com.mastergaurav.codemirror" name="gcodemirror" rev="0.9">
           <artifact name="gcodemirror" url="https://gcodemirror.googlecode.com/files/gcodemirror-0.9.jar" />
         </dependency>
+        <dependency org="org.vectomatic" name="lib-gwt-file" rev="0.3.4"/>
     </dependencies>
 </ivy-module>
 

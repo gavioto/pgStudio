@@ -42,13 +42,16 @@
       <delete dir="war/WEB-INF/deploy"/>
       <delete dir="war/WEB-INF/classes"/>
       <delete dir="deploy"/>
-      <delete dir="lib"/>
-      <delete dir="war/WEB-INF/lib"/>
       <delete dir="war/com.openscg.pgstudio.PgStudio"/>
       <delete file="${war.name}"/>
       <delete file="${lib.dir}/${jar.name}"/>
     </target>
         
+    <target name="clean-all" depends="clean">
+      <delete dir="lib"/>
+      <delete dir="war/WEB-INF/lib"/>
+    </target>
+
     <target name="download-ivy" unless="offline">
 
         <mkdir dir="${ivy.jar.dir}"/>

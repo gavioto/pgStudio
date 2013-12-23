@@ -109,6 +109,9 @@ public interface Resources extends ClientBundle {
 	@Source("images/false.gif")
 	ImageResource falseBox();
 
+	@Source("images/file-open.png")
+	ImageResource fileOpen();
+
 	@Source("images/foreign-table.gif")
 	ImageResource foreignTable();
 
@@ -204,6 +207,9 @@ public interface Resources extends ClientBundle {
 
 	@Source("images/percent.gif")
 	ImageResource stats();
+
+	@Source("images/save.png")
+	ImageResource save();
 
 	@Source("images/table.gif")
 	ImageResource table();

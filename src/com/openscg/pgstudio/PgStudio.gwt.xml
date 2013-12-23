@@ -26,6 +26,7 @@
   <inherits name="com.google.gwt.json.JSON" />
   <inherits name='com.mastergaurav.codemirror.CodeMirror' />
   <inherits name='org.gwt.advanced.Grid'/>
+  <inherits name='org.vectomatic.libgwtfile'/>
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='com.openscg.pgstudio.client.PgStudio'/>
