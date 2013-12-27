@@ -167,7 +167,6 @@ public class SQLWorksheet extends Composite  {
 		PushButton stop = getTerminateButton();
 		PushButton run = getRunButton();
 		PushButton explain = getExplainButton();
-		PushButton close = getCloseButton();
 		
 		try {
 			if (FileUtils.supportsFileAPI()) {
@@ -185,7 +184,6 @@ public class SQLWorksheet extends Composite  {
 		bar.add(stop);
 		bar.add(run);
 		bar.add(explain);
-		bar.add(close);
 		
 		return bar.asWidget();
 	}
@@ -353,21 +351,6 @@ public class SQLWorksheet extends Composite  {
 		return button;
 	}
 	
-	private PushButton getCloseButton() {
-		PushButton button = new PushButton(new Image(PgStudio.Images.close()));
-		button.setTitle("Close");
-		button.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				PgStudio.sqlDialog.hide(true);
-				SQLWorksheet.closedByUser = true;
-				PgStudio.msp.refreshCurrent();
-				PgStudio.dtp.refreshCurrent();
-			}
-		});
-		return button;
-	}
-
 	private ClickHandler getExplainClickHandler() {
 		ClickHandler handler = new ClickHandler() {
 
@@ -733,7 +716,7 @@ public class SQLWorksheet extends Composite  {
 				}
 			}
 		} catch (Exception ex) {
-			Window.alert("Problem reading file");
+			Window.alert(PROBLEM_READING_FILE_STR);
 		}
 	}
 	

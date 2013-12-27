@@ -68,6 +68,8 @@ import com.openscg.pgstudio.client.panels.popups.DropSchemaPopUp;
 import com.openscg.pgstudio.client.panels.popups.LogoutPopUp;
 import com.openscg.pgstudio.client.panels.popups.PopUpException;
 import com.openscg.pgstudio.client.panels.popups.RenameSchemaPopUp;
+import com.openscg.pgstudio.client.utils.ExtendedDialogBox;
+import com.openscg.pgstudio.client.utils.ExtendedDialogBox;
 import com.openscg.pgstudio.client.utils.SessionManager;
 
 /**
@@ -310,14 +312,14 @@ public class PgStudio implements EntryPoint {
 		button.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				  sqlDialog = new DialogBox();
+				  sqlDialog = new ExtendedDialogBox();
 				  sqlDialog.setTitle("SQL Worksheet");
 
 		    	  SQLWorksheet sql = new SQLWorksheet();
 
 		    	  sqlDialog.setWidget(sql.asWidget());
 		    	  sqlDialog.setGlassEnabled(true);
-		    	  sqlDialog.setPopupPosition(20, 20);
+		    	  sqlDialog.setPopupPosition(30, 30);
 		    	  sqlDialog.setText("SQL Worksheet");
 		    	  sqlDialog.show();
 
