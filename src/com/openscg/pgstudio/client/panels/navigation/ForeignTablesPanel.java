@@ -32,6 +32,7 @@ import com.google.gwt.cell.client.ImageResourceCell;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArray;
+import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.resources.client.ImageResource;
@@ -51,6 +52,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.CellPreviewEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 import com.openscg.pgstudio.client.PgStudio;
@@ -61,7 +63,6 @@ import com.openscg.pgstudio.client.messages.DataTypesJsObject;
 import com.openscg.pgstudio.client.models.DataTypeInfo;
 import com.openscg.pgstudio.client.models.DatabaseObjectInfo;
 import com.openscg.pgstudio.client.models.ForeignTableInfo;
-import com.openscg.pgstudio.client.models.ViewInfo;
 import com.openscg.pgstudio.client.panels.ColumnPanel;
 import com.openscg.pgstudio.client.panels.popups.AddForeignTablePopUp;
 import com.openscg.pgstudio.client.panels.popups.AnalyzePopUp;
@@ -118,6 +119,21 @@ public class ForeignTablesPanel extends Composite implements MenuPanel {
 		panel.add(getButtonBar());
 		panel.add(getTableList());
 		
+		dataGrid.addCellPreviewHandler(new CellPreviewEvent.Handler<ForeignTableInfo>() {
+			@Override
+			public void onCellPreview(CellPreviewEvent<ForeignTableInfo> event) {
+				if (BrowserEvents.CLICK.equals(event.getNativeEvent().getType())) {
+					if (dataGrid.getRowCount() == 1) {
+						ForeignTableInfo i = dataProvider.getList().get(0);
+
+						if (dataGrid.getSelectionModel().isSelected(i)) {
+							selectFirst();
+						}
+					}
+	            }
+			}
+		});
+
 		initWidget(panel);
 	}
 
@@ -309,6 +325,7 @@ public class ForeignTablesPanel extends Composite implements MenuPanel {
 			if (!dataProvider.getList().isEmpty()) {
 				ForeignTableInfo i = dataProvider.getList().get(0);
 				dataGrid.getSelectionModel().setSelected(i, true);
+				main.setSelectedItem(i);
 				return true;
 			}
 		}

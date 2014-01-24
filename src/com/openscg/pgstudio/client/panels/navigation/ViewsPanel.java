@@ -98,6 +98,21 @@ public class ViewsPanel extends Composite implements MenuPanel {
 		panel.add(getButtonBar());
 		panel.add(getViewList());		
 						
+		dataGrid.addCellPreviewHandler(new CellPreviewEvent.Handler<ViewInfo>() {
+			@Override
+			public void onCellPreview(CellPreviewEvent<ViewInfo> event) {
+				if (BrowserEvents.CLICK.equals(event.getNativeEvent().getType())) {
+					if (dataGrid.getRowCount() == 1) {
+						ViewInfo i = dataProvider.getList().get(0);
+
+						if (dataGrid.getSelectionModel().isSelected(i)) {
+							selectFirst();
+						}
+					}
+	            }
+			}
+		});
+		
 		initWidget(panel);
 	}
 
@@ -309,6 +324,7 @@ public class ViewsPanel extends Composite implements MenuPanel {
 			if (!dataProvider.getList().isEmpty()) {
 				ViewInfo v = dataProvider.getList().get(0);
 				dataGrid.getSelectionModel().setSelected(v, true);
+				main.setSelectedItem(v);
 				return true;
 			}
 		}

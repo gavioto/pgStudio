@@ -28,6 +28,7 @@ import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.ImageResourceCell;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.resources.client.ImageResource;
@@ -41,6 +42,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.CellPreviewEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 import com.openscg.pgstudio.client.PgStudio.ITEM_TYPE;
@@ -87,6 +89,21 @@ public class SequencesPanel extends Composite implements MenuPanel {
 		panel.add(getButtonBar());
 		panel.add(getSequenceList());		
 		
+		dataGrid.addCellPreviewHandler(new CellPreviewEvent.Handler<SequenceInfo>() {
+			@Override
+			public void onCellPreview(CellPreviewEvent<SequenceInfo> event) {
+				if (BrowserEvents.CLICK.equals(event.getNativeEvent().getType())) {
+					if (dataGrid.getRowCount() == 1) {
+						SequenceInfo i = dataProvider.getList().get(0);
+
+						if (dataGrid.getSelectionModel().isSelected(i)) {
+							selectFirst();
+						}
+					}
+	            }
+			}
+		});
+
 		initWidget(panel);
 	}
 
@@ -216,6 +233,7 @@ public class SequencesPanel extends Composite implements MenuPanel {
 			if (!dataProvider.getList().isEmpty()) {
 				SequenceInfo i = dataProvider.getList().get(0);
 				dataGrid.getSelectionModel().setSelected(i, true);
+				main.setSelectedItem(i);
 				return true;
 			}
 		}
