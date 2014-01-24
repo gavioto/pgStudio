@@ -468,6 +468,8 @@ public class PgStudio implements EntryPoint {
 		
 		schemas.setVisibleItemCount(1);
 		schemas.setWidth("115px");
+		schemas.setStyleName("roundList");
+
 		
 		schemas.addChangeHandler(new ChangeHandler() {
 			@Override

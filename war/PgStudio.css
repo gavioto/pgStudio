@@ -680,8 +680,7 @@ span#version {
 	border-left: 1px solid #bbbbbb;
 	border-top: 1px solid #bbbbbb;
 	border-bottom: 1px solid #bbbbbb;
-	background-image: url(images/bg_dialog.png);
-    background-repeat: repeat-y;
+        background-color: #B6C7D3;
 }
 
 .StudioPopup .gwt-Button {
@@ -696,13 +695,13 @@ span#version {
 }
 
 .StudioPopup-Msg {
-	color: #005A8C;
+	color: #0E2433;
     font-family: arial, sans-serif;
     font-size: 15px;
 }
 
 .StudioPopup-Msg-Strong {
-	color: #005A8C;
+	color: #0E2433;
     font-family: arial, sans-serif;
     font-size: 18px;
 	font-weight: bold;
