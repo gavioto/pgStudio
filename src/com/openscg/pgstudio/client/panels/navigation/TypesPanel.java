@@ -217,4 +217,18 @@ public class TypesPanel extends Composite implements MenuPanel {
 	public void refresh() {
 		dataProvider.setSchema(schema);	
 	}
+	
+	@Override
+	public Boolean selectFirst() {
+		if (dataProvider != null) {
+			if (!dataProvider.getList().isEmpty()) {
+				TypeInfo i = dataProvider.getList().get(0);
+				dataGrid.getSelectionModel().setSelected(i, true);
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
 }

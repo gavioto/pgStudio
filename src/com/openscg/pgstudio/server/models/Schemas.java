@@ -40,7 +40,7 @@ public class Schemas {
 	private static String SCHEMA_LIST = 
 		"SELECT nspname, oid " +
 		"  FROM pg_namespace " +
-		" WHERE nspname not in ('pg_toast', 'pg_temp_1', 'pg_toast_temp_1', 'pg_catalog', 'information_schema') " +
+		" WHERE nspname not in ('pg_toast', 'pg_temp_1', 'pg_toast_temp_1') " +
 		" ORDER BY nspname ";
 	
 	private static String SCHEMA_NAME = 

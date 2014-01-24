@@ -61,6 +61,7 @@ import com.openscg.pgstudio.client.messages.DataTypesJsObject;
 import com.openscg.pgstudio.client.models.DataTypeInfo;
 import com.openscg.pgstudio.client.models.DatabaseObjectInfo;
 import com.openscg.pgstudio.client.models.ForeignTableInfo;
+import com.openscg.pgstudio.client.models.ViewInfo;
 import com.openscg.pgstudio.client.panels.ColumnPanel;
 import com.openscg.pgstudio.client.panels.popups.AddForeignTablePopUp;
 import com.openscg.pgstudio.client.panels.popups.AnalyzePopUp;
@@ -300,6 +301,19 @@ public class ForeignTablesPanel extends Composite implements MenuPanel {
 
 	public void refresh() {
 		dataProvider.setSchema(schema);
+	}
+
+	@Override
+	public Boolean selectFirst() {
+		if (dataProvider != null) {
+			if (!dataProvider.getList().isEmpty()) {
+				ForeignTableInfo i = dataProvider.getList().get(0);
+				dataGrid.getSelectionModel().setSelected(i, true);
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	private DataTypeInfo msgToDataTypeInfo(DataTypesJsObject msg) {

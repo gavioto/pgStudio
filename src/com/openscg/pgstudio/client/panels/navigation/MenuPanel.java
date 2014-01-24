@@ -31,4 +31,5 @@ public interface MenuPanel {
 	
 	public void refresh();
 
+	public Boolean selectFirst();
 }

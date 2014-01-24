@@ -28,6 +28,7 @@ import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.ImageResourceCell;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.resources.client.ImageResource;
@@ -42,6 +43,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.CellPreviewEvent;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
@@ -85,7 +87,7 @@ public class ViewsPanel extends Composite implements MenuPanel {
 		dataProvider.setSchema(schema);
 	}
 	
-	public ViewsPanel(PgStudio main) {
+	public ViewsPanel(final PgStudio main) {
 		this.main = main;
 		
 		VerticalPanel panel = new VerticalPanel();
@@ -95,7 +97,7 @@ public class ViewsPanel extends Composite implements MenuPanel {
 
 		panel.add(getButtonBar());
 		panel.add(getViewList());		
-		
+						
 		initWidget(panel);
 	}
 
@@ -299,5 +301,18 @@ public class ViewsPanel extends Composite implements MenuPanel {
 
 	public void refresh() {
 		dataProvider.setSchema(schema);
+	}
+
+	@Override
+	public Boolean selectFirst() {
+		if (dataProvider != null) {
+			if (!dataProvider.getList().isEmpty()) {
+				ViewInfo v = dataProvider.getList().get(0);
+				dataGrid.getSelectionModel().setSelected(v, true);
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }

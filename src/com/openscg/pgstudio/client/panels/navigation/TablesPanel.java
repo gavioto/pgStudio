@@ -33,7 +33,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -90,25 +89,7 @@ public class TablesPanel extends Composite implements MenuPanel {
 
 		panel.add(getButtonBar());
 		panel.add(getTableList());
-		
-		// Start a timer to wait for the table list to be returned and select
-		// the first item, but only wait for a max of 1.5 seconds
-		Timer poll = new Timer() {
-			@Override
-			public void run() {
-				this.schedule(1000);
-				if (dataProvider != null) {
-					if (!dataProvider.getList().isEmpty()) {
-						TableInfo t = dataProvider.getList().get(0);
-						dataGrid.getSelectionModel().setSelected(t, true);
-						this.cancel();
-					}
-				}
-			}
-			
-		};
-		poll.schedule(500);
-		
+				
 		initWidget(panel);
 	}
 
@@ -314,5 +295,19 @@ public class TablesPanel extends Composite implements MenuPanel {
 
 	public void refresh() {
 		dataProvider.setSchema(schema);
+	}
+
+	@Override
+	public Boolean selectFirst() {
+		if (dataProvider != null) {
+			if (!dataProvider.getList().isEmpty()) {
+				TableInfo t = dataProvider.getList().get(0);
+				dataGrid.getSelectionModel().setSelected(t, true);
+
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }

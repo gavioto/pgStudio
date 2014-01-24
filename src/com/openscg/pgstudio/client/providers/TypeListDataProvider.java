@@ -54,6 +54,10 @@ import com.openscg.pgstudio.client.models.TypeInfo.TYPE_KIND;
 				getData();
 			}
 			
+			public List<TypeInfo> getList()	{
+				return typeList;
+			}
+
 			public void refresh() {
 				getData();				
 			}

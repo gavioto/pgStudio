@@ -54,6 +54,10 @@ public class ViewListDataProvider extends AsyncDataProvider<ViewInfo> implements
 		getData();
 	}
 
+	public List<ViewInfo> getList()	{
+		return viewList;
+	}
+
 	public void refresh() {
 		getData();
 	}

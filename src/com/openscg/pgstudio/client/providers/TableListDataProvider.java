@@ -32,7 +32,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
-import com.google.gwt.view.client.SingleSelectionModel;
 import com.openscg.pgstudio.client.PgStudio;
 import com.openscg.pgstudio.client.PgStudioService;
 import com.openscg.pgstudio.client.PgStudioServiceAsync;
@@ -41,9 +40,6 @@ import com.openscg.pgstudio.client.messages.TablesJsObject;
 import com.openscg.pgstudio.client.models.DatabaseObjectInfo;
 import com.openscg.pgstudio.client.models.TableInfo;
 import com.openscg.pgstudio.client.models.TableInfo.TABLE_TYPE;
-import com.openscg.pgstudio.client.panels.SQLWorksheet;
-import com.openscg.pgstudio.client.panels.popups.AddTablePopUp;
-import com.openscg.pgstudio.client.panels.popups.PopUpException;
 
 	public class TableListDataProvider extends AsyncDataProvider<TableInfo> implements ModelListProvider 
 	{
@@ -103,20 +99,7 @@ import com.openscg.pgstudio.client.panels.popups.PopUpException;
 									tableList.add(msgToColumnInfo(table));
 								}
 							}
-							if (tableList.size() == 0
-									&& !"".equals(PgStudio.getSelectedSchema())
-									&& !SQLWorksheet.closedByUser) {
 
-								AddTablePopUp pop = new AddTablePopUp();
-								pop.setSelectionModel(new SingleSelectionModel<TableInfo>());
-								pop.setDataProvider(me);
-								pop.setSchema(schema);
-								try {
-									pop.getDialogBox();
-								} catch (PopUpException caught) {
-									Window.alert(caught.getMessage());
-								}
-							}
 							updateRowCount(tableList.size(), true);
 							updateRowData(0, tableList);
 						}

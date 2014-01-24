@@ -46,8 +46,6 @@ import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 import com.openscg.pgstudio.client.PgStudio.ITEM_TYPE;
 import com.openscg.pgstudio.client.Resources;
 import com.openscg.pgstudio.client.PgStudio;
-import com.openscg.pgstudio.client.PgStudioService;
-import com.openscg.pgstudio.client.PgStudioServiceAsync;
 import com.openscg.pgstudio.client.models.DatabaseObjectInfo;
 import com.openscg.pgstudio.client.models.SequenceInfo;
 import com.openscg.pgstudio.client.panels.popups.AddSequencePopUp;
@@ -211,4 +209,18 @@ public class SequencesPanel extends Composite implements MenuPanel {
 	public void refresh() {
 		dataProvider.setSchema(schema);	
 	}
+	
+	@Override
+	public Boolean selectFirst() {
+		if (dataProvider != null) {
+			if (!dataProvider.getList().isEmpty()) {
+				SequenceInfo i = dataProvider.getList().get(0);
+				dataGrid.getSelectionModel().setSelected(i, true);
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
 }

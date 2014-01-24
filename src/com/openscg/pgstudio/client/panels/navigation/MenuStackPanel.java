@@ -26,8 +26,10 @@ package com.openscg.pgstudio.client.panels.navigation;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.DecoratedStackPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.openscg.pgstudio.client.PgStudio.ITEM_TYPE;
 import com.openscg.pgstudio.client.Resources;
 import com.openscg.pgstudio.client.PgStudio;
 import com.openscg.pgstudio.client.models.DatabaseObjectInfo;
@@ -71,6 +73,38 @@ public class MenuStackPanel {
 		funcs.setSchema(schema);
 		seqs.setSchema(schema);
 		types.setSchema(schema);
+		
+		// Start a timer to wait for the table list to be returned and select
+		// the first item, but only wait for a max of 1.5 seconds
+		Timer poll = new Timer() {
+			@Override
+			public void run() {
+				this.schedule(1000);
+				
+				if (tables.selectFirst()) {
+					setSelected(ITEM_TYPE.TABLE);
+					this.cancel();
+				} else if (views.selectFirst()) {
+					setSelected(ITEM_TYPE.VIEW);
+					this.cancel();
+				} else if (ftables.selectFirst()) {
+					setSelected(ITEM_TYPE.FOREIGN_TABLE);
+					this.cancel();
+				} else if (funcs.selectFirst()) {
+					setSelected(ITEM_TYPE.FUNCTION);
+					this.cancel();
+				} else if (seqs.selectFirst()) {
+					setSelected(ITEM_TYPE.SEQUENCE);
+					this.cancel();
+				} else if (types.selectFirst()) {
+					setSelected(ITEM_TYPE.TYPE);
+					this.cancel();
+				}
+			}
+			
+		};
+		poll.schedule(500);
+
 	}
 	
 	public Widget asWidget() {
@@ -104,5 +138,34 @@ public class MenuStackPanel {
 	public void refreshCurrent()	{
 		MenuPanel p = (MenuPanel) panel.getWidget(panel.getSelectedIndex());
 		p.refresh();
+	}
+	
+	public void setSelected(ITEM_TYPE type) {
+		int index = 0;
+		switch (type) {
+		case TABLE:
+			index = panel.getWidgetIndex(tables);
+			break;
+		case VIEW:
+			index = panel.getWidgetIndex(views);
+			break;
+		case FOREIGN_TABLE:
+			index = panel.getWidgetIndex(ftables);
+			break;
+		case FUNCTION:
+			index = panel.getWidgetIndex(funcs);
+			break;
+		case SEQUENCE:
+			index = panel.getWidgetIndex(seqs);
+			break;
+		case TYPE:
+			index = panel.getWidgetIndex(types);
+			break;
+		default:
+			break;
+		}
+		
+		selectedIndex = index;
+		panel.showStack(selectedIndex);
 	}
 }

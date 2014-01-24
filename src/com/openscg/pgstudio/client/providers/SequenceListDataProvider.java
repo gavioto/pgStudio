@@ -53,6 +53,10 @@ import com.openscg.pgstudio.client.models.SequenceInfo;
 				getData();
 			}
 			
+			public List<SequenceInfo> getList()	{
+				return seqList;
+			}
+
 			public void refresh() {
 				getData();				
 			}

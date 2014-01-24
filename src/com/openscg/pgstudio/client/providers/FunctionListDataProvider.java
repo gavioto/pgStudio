@@ -54,6 +54,10 @@ public class FunctionListDataProvider extends AsyncDataProvider<FunctionInfo>
 		getData();
 	}
 
+	public List<FunctionInfo> getList()	{
+		return funcList;
+	}
+
 	public void refresh() {
 		getData();
 	}

@@ -69,7 +69,6 @@ import com.openscg.pgstudio.client.panels.popups.LogoutPopUp;
 import com.openscg.pgstudio.client.panels.popups.PopUpException;
 import com.openscg.pgstudio.client.panels.popups.RenameSchemaPopUp;
 import com.openscg.pgstudio.client.utils.ExtendedDialogBox;
-import com.openscg.pgstudio.client.utils.ExtendedDialogBox;
 import com.openscg.pgstudio.client.utils.SessionManager;
 
 /**
@@ -131,6 +130,7 @@ public class PgStudio implements EntryPoint {
 	private Label detailsInfo = new Label();
 	
 	private static DatabaseObjectInfo selectedSchema = null;
+	private static ModelInfo selectedItem = null;
 	
 	private SelectionChangeHandler selectionChangeHandler; 
 
@@ -472,12 +472,15 @@ public class PgStudio implements EntryPoint {
 		schemas.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {
-		       String name = schemas.getItemText(schemas.getSelectedIndex());
-		       int id = Integer.parseInt(schemas.getValue(schemas.getSelectedIndex()));
-		       DatabaseObjectInfo info = new DatabaseObjectInfo(id, name);
-		       selectedSchema = info;
-		       msp.setSchema(info);		       
-			}			
+				selectedItem = null;
+
+				String name = schemas.getItemText(schemas.getSelectedIndex());
+				int id = Integer.parseInt(schemas.getValue(schemas
+						.getSelectedIndex()));
+				DatabaseObjectInfo info = new DatabaseObjectInfo(id, name);
+				selectedSchema = info;
+				msp.setSchema(info);
+			}
 		});
 		
 		panel.add(lbl);
@@ -498,16 +501,21 @@ public class PgStudio implements EntryPoint {
 
 				JsArray<ListJsObject> objects = DatabaseObjectInfo.json2Messages(result);
 
+				int publicSchemaIndex = 0;
 				for (int i = 0; i < objects.length(); i++) {
 					DatabaseObjectInfo info = DatabaseObjectInfo.msgToInfo(objects.get(i));
+					
+					if (info.getName().equalsIgnoreCase("public"))
+						publicSchemaIndex = i;
+					
 					schemas.addItem(info.getName(), Integer.toString(info.getId()));
 					schemaList.add(info);
 				}
 				
                 if (objects.length() > 0) {
-            	    schemas.setSelectedIndex(0);
-            	    selectedSchema = schemaList.get(0);
-            	    msp.setSchema(schemaList.get(0));
+            	    schemas.setSelectedIndex(publicSchemaIndex);
+            	    selectedSchema = schemaList.get(publicSchemaIndex);
+            	    msp.setSchema(schemaList.get(publicSchemaIndex));
                 }
             }
           });
@@ -528,22 +536,29 @@ public class PgStudio implements EntryPoint {
             	
 				JsArray<ListJsObject> objects = DatabaseObjectInfo.json2Messages(result);
 
+				int selectedSchemaIndex = 0;
 				for (int i = 0; i < objects.length(); i++) {
 					DatabaseObjectInfo info = DatabaseObjectInfo.msgToInfo(objects.get(i));
+					
+					if (info.getName().equals(selectedSchema))
+						selectedSchemaIndex = i;
+
 					schemas.addItem(info.getName(), Integer.toString(info.getId()));
 					schemaList.add(info);
 				}
 				
                 if (objects.length() > 0) {
-            	    schemas.setSelectedIndex(0);
-            	    selectedSchema = schemaList.get(0);
-            	    msp.setSchema(schemaList.get(0));
+            	    schemas.setSelectedIndex(selectedSchemaIndex);
+            	    selectedSchema = schemaList.get(selectedSchemaIndex);
+            	    msp.setSchema(schemaList.get(selectedSchemaIndex));
                 }              
             }
           });
 	}
 
 	public void setSelectedItem(ModelInfo selected) {
+		selectedItem = selected;
+		
 		String prefix = "";
 		switch (selected.getItemType()) {
 		case TABLE:
@@ -584,6 +599,10 @@ public class PgStudio implements EntryPoint {
 
 	public static DatabaseObjectInfo getSelectedSchema() {
 		return selectedSchema;
+	}
+	
+	public ModelInfo getSelectedItem() {
+		return selectedItem;
 	}
 	
 	public int getDatabaseVersion() {
