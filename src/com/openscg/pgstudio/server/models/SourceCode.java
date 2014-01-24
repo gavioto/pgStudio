@@ -336,7 +336,7 @@ public class SourceCode {
 				
 				result = "CREATE FUNCTION " + name;
 				result = result + " RETURNS " + ret;
-				result = result + " AS $$ \n";
+				result = result + " AS $$ ";
 				result = result + src;
 				result = result + "$$ LANGUAGE " + lang + ";";
 			}
