@@ -62,6 +62,7 @@ import com.openscg.pgstudio.client.models.DatabaseObjectInfo;
 import com.openscg.pgstudio.client.models.ModelInfo;
 import com.openscg.pgstudio.client.panels.DetailsTabPanel;
 import com.openscg.pgstudio.client.panels.SQLWorksheet;
+import com.openscg.pgstudio.client.panels.MonitorPanel;
 import com.openscg.pgstudio.client.panels.navigation.MenuStackPanel;
 import com.openscg.pgstudio.client.panels.popups.AddSchemaPopUp;
 import com.openscg.pgstudio.client.panels.popups.DropSchemaPopUp;
@@ -266,6 +267,7 @@ public class PgStudio implements EntryPoint {
 		
 		PushButton disconnect = getDisconnectButton();
 		PushButton sql = getSQLWorksheetButton();
+		PushButton monitor = getMonitorPanelButton();
 		PushButton drop = getDropButton();
 		PushButton rename = getRenameButton();
 		PushButton create = getCreateButton();
@@ -324,6 +326,34 @@ public class PgStudio implements EntryPoint {
 		    	  sqlDialog.show();
 
 			   	  sql.setupCodePanel();				
+
+			}			
+		});
+		
+		return button;
+	}
+	
+	private PushButton getMonitorPanelButton() {
+		PushButton button = new PushButton(new Image(PgStudio.Images.sqlWorksheet()));
+		button.setTitle("Monitor");
+		
+		button.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				  sqlDialog = new ExtendedDialogBox();
+				  sqlDialog.setTitle("Monitor");
+
+		    	  //SQLWorksheet sql = new SQLWorksheet();
+                  MonitorPanel monitor = new MonitorPanel();
+				  
+				  
+		    	  sqlDialog.setWidget(monitor.asWidget());
+		    	  sqlDialog.setGlassEnabled(true);
+		    	  sqlDialog.setPopupPosition(30, 30);
+		    	  sqlDialog.setText("Monitor");
+		    	  sqlDialog.show();
+
+			   	 // sql.setupCodePanel();				
 
 			}			
 		});
