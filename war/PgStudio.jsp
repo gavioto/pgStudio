@@ -82,14 +82,14 @@
                 <div class="row clearfix ">
                     <label class="connectlabel" for="id_user_name">Username</label>
                     <div class="span1">
-                        <input id="username" tabindex="4" maxlength="30" type="text" class="required" name="username" value="<%=((request.getSession().getAttribute("username") == null || "".equals(request.getSession().getAttribute("username"))) ? "" : request.getSession().getAttribute("username")) %>">
+                        <input id="username" tabindex="4" maxlength="40" type="text" class="required" name="username" value="<%=((request.getSession().getAttribute("username") == null || "".equals(request.getSession().getAttribute("username"))) ? "" : request.getSession().getAttribute("username")) %>">
                     </div>
                 </div>
 
                 <div class="row clearfix ">
                     <label class="connectlabel" for="id_password">Password</label>
                     <div class="span1">
-                        <input tabindex="5" maxlength="30" type="password" name="password" id="password" class="required">
+                        <input tabindex="5" maxlength="40" type="password" name="password" id="password" class="required">
                     </div>
                 </div>
               </fieldset>
