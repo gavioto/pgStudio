@@ -2,4 +2,5 @@ applications:
 - name: pg-studio
   memory: 512M
   instances: 1
+  random-route: true
   path: ./pgstudio.war
