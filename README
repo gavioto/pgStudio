@@ -3,11 +3,7 @@ PostgreSQL Studio README
  
 Git Clone 
 cd pgStudio
-
-ant clean
-ant deploy
 cf push
-
 Use URL returned by cf push
 
 
