@@ -1,14 +1,9 @@
 PostgreSQL Studio README
 ==================
  
-Introduction
-------------
-PostgreSQL Studio gives you the power to perform essential PostgreSQL 
-database development tasks from a web-based console. With more and more 
-PostgreSQL databases running in a Cloud environment, PostgreSQL Studio 
-lets you work with your databases without the need to open firewalls.
+Git Clone 
+cd pgStudio
+cf push
+Use URL returned by cf push
 
-Compilation
------------
-> ant clean
-> ant deploy
+
